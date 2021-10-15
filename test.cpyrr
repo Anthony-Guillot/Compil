@@ -1,0 +1,5 @@
+prog
+begin
+inst_void;
+x22 = 12;
+end
