@@ -1,5 +1,6 @@
-prog
-begin
+PROG
+var p20 : int;
+BEGIN
 inst_void;
-x22 = 12;
-end
+x12=m12;
+END
