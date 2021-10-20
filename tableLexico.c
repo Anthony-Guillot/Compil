@@ -6,7 +6,7 @@ hashc tabhashcode[31];
 /*---Calcul le hashcode d'un lexeme---*/
 int calcul_hascode(char *mot, int taille)
 {
-    int somme;
+    int somme=0;
     for (int i = 0; i < taille; i++)
     {
         somme += mot[i];
@@ -33,9 +33,10 @@ void init(lexico *table, hashc *tablehc)
 void afficherTableLexico(lexico *table)
 {
     int i = 0;
+    fprintf(stdout,"position| longueur\t| lexem\t\t| suivant\t\n");
     for (i = 0; table[i].longueur != 0; i++)
     {
-        printf("%d | %s | %d\n", table[i].longueur, table[i].lexeme, table[i].suivant);
+        fprintf(stdout,"%d\t|\t%d\t|\t%s\t|\t%d\n",i, table[i].longueur, table[i].lexeme, table[i].suivant);
     }
 }
 
@@ -43,6 +44,7 @@ void afficherTableLexico(lexico *table)
 int insererbis(char *lexeme, lexico *table)
 {
     int i;
+    
     for (i = 0; i < 500; i++)
     {
         if (table[i].longueur == 0)
@@ -52,7 +54,7 @@ int insererbis(char *lexeme, lexico *table)
             break;
         }
     }
-    return i - 1;
+    return i;
 }
 
 /*---Verifier si le lexeme a position donnée est different , si oui, il verifie le suivant s'il en existe un---*/
@@ -60,6 +62,7 @@ void verif_lexeme(char *lexeme, lexico *table, int position)
 {
     int longeur;
     longeur = strlen(lexeme);
+    
     if (longeur != table[position].longueur)
     {
         if (table[position].suivant == -1)
@@ -82,6 +85,7 @@ void verif_lexeme(char *lexeme, lexico *table, int position)
             if (table[position].suivant == -1)
             {
                 table[position].suivant = insererbis(lexeme, table);
+                return;
             }
             else
             {
@@ -97,7 +101,7 @@ void inserer(char *lexeme, lexico *table, hashc *tablehc)
     int retour = verif_hachcode(lexeme, tablehc);
     if (retour == -1)
     {
-        tablehc[calcul_hascode(lexeme, strlen(lexeme))].hashcode = insererbis(lexeme, table);
+        return;
     }
     else
     {
@@ -112,6 +116,7 @@ int verif_hachcode(char *lexeme, hashc *tabhc)
     hc = calcul_hascode(lexeme, strlen(lexeme));
     if (tabhc[hc].hashcode == -1)
     {
+        tabhc[hc].hashcode=insererbis(lexeme,table);
         return -1;
     }
     else
@@ -122,4 +127,19 @@ int verif_hachcode(char *lexeme, hashc *tabhc)
 int main()
 {
     init(table, tabhashcode);
+    
+    
+    inserer("x12",table,tabhashcode);
+    inserer("ok",table,tabhashcode);
+    inserer("touze",table,tabhashcode);
+    inserer("x1",table,tabhashcode);
+    inserer("gte",table,tabhashcode);
+    inserer("Bte",table,tabhashcode);
+    inserer("Che",table,tabhashcode);
+    inserer("x12",table,tabhashcode);
+    inserer("12x",table,tabhashcode);
+    
+    afficherTableLexico(table);
+
+    exit(EXIT_SUCCESS);
 }
