@@ -14,7 +14,7 @@
 /*---TOKEN structures d'un corps/programme---*/
 %token PROG DEBUT FIN
 /*---TOKEN ponctuation---*/
-%token POINT_VIRGULE DEUX_POINTS POINT_POINT VIRGULE
+%token POINT_VIRGULE DEUX_POINTS POINT_POINT VIRGULE POINT
 /*---TOKEN concernant les declarations---*/
 %token TYPE VARIABLE PROCEDURE FONCTION STRUCT FSTRUCT TABLEAU DE RETOURNE
 /*---TOKEN concernant les boucles---*/
@@ -204,12 +204,20 @@ opbool: EGALE
 lecture: LIRE PARENTHESE_OUVRANTE liste_variables PARENTHESE_FERMANTE;
 ecriture: ECRIRE PARENTHESE_OUVRANTE format suite_ecriture PARENTHESE_FERMANTE;
 liste_variables:variable;
-|liste_variables variable;
+|liste_variables VIRGULE variable;
 format:
 ;
+variable:IDF
+| tableau
+| variable POINT tableau
+| variable POINT IDF
+;
+
+tableau:IDF CROCHET_OUVRANT expression_arithmetique CROCHET_FERMANT;
+
 suite_ecriture:
               | VIRGULE variable suite_ecriture
-              ;
+              ; 
 %%
 int yyerror(){
   printf("Erreur de syntaxe à la ligne %d\n",numligne);

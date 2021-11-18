@@ -35,6 +35,7 @@ BEGIN {return DEBUT;}
 END {return FIN;}
 : {return DEUX_POINTS;}
 \.\. {return POINT_POINT;}
+\. {return POINT;}
 struct {return STRUCT;}
 endstruct {return FSTRUCT;}
 
