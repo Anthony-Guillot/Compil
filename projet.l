@@ -29,11 +29,11 @@ write {return ECRIRE;}
 
     /*--- Balise de structure ---*/
 PROG {return PROG;}
-; {return POINT_VIRGULE;}
-, {return VIRGULE;}
+\; {return POINT_VIRGULE;}
+\, {return VIRGULE;}
 BEGIN {return DEBUT;}
 END {return FIN;}
-: {return DEUX_POINTS;}
+\: {return DEUX_POINTS;}
 \.\. {return POINT_POINT;}
 \. {return POINT;}
 struct {return STRUCT;}
@@ -81,4 +81,5 @@ inst_void {return VIDE;}
 
     /*---gestion de la ligne d'erreur---*/
 [\n]  {numligne++;}
+\" {return ERROR;}
 %%

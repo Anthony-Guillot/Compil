@@ -29,6 +29,8 @@
 %token PLUS MOINS MULT DIV OPAFF
 /*---TOKEN entree sorties---*/
 %token LIRE ECRIRE
+/*---TOKEN erreur en cas de symboles erreur---*/
+%token ERROR
 %%
 
 programme:PROG corps
@@ -89,8 +91,8 @@ instruction:affectation
 |appel
 |VIDE
 |RETOURNE resultat_retourne
-|lecture
 |ecriture
+|lecture
 ;
 
 /*-----------------------------------------------------------------------*/
@@ -183,7 +185,9 @@ expression_arithmetique2:expression_arithmetique2 MULT expression_arithmetique3
 
 expression_arithmetique3:PARENTHESE_OUVRANTE expression_arithmetique PARENTHESE_FERMANTE
 |CSTE_ENTIERE
-|variable
+|CSTE_REEL
+|lecture
+|IDF
 ;
 
 
@@ -202,11 +206,15 @@ opbool: EGALE
 ;
 
 lecture: LIRE PARENTHESE_OUVRANTE liste_variables PARENTHESE_FERMANTE;
+
 ecriture: ECRIRE PARENTHESE_OUVRANTE format suite_ecriture PARENTHESE_FERMANTE;
+
 liste_variables:variable;
 |liste_variables VIRGULE variable;
+
 format:
 ;
+
 variable:IDF
 | tableau
 | variable POINT tableau

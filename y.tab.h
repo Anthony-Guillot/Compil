@@ -68,37 +68,40 @@ extern int yydebug;
     DEUX_POINTS = 278,
     POINT_POINT = 279,
     VIRGULE = 280,
-    TYPE = 281,
-    VARIABLE = 282,
-    PROCEDURE = 283,
-    FONCTION = 284,
-    STRUCT = 285,
-    FSTRUCT = 286,
-    TABLEAU = 287,
-    DE = 288,
-    RETOURNE = 289,
-    SI = 290,
-    ALORS = 291,
-    SINON = 292,
-    TANT_QUE = 293,
-    FAIRE = 294,
-    POUR = 295,
-    CSTE_ENTIERE = 296,
-    CSTE_REEL = 297,
-    VIDE = 298,
-    ACCOLADE_FERMANTE = 299,
-    ACCOLADE_OUVRANT = 300,
-    PARENTHESE_FERMANTE = 301,
-    PARENTHESE_OUVRANTE = 302,
-    CROCHET_OUVRANT = 303,
-    CROCHET_FERMANT = 304,
-    PLUS = 305,
-    MOINS = 306,
-    MULT = 307,
-    DIV = 308,
-    OPAFF = 309,
-    LIRE = 310,
-    ECRIRE = 311
+    POINT = 281,
+    TYPE = 282,
+    VARIABLE = 283,
+    PROCEDURE = 284,
+    FONCTION = 285,
+    STRUCT = 286,
+    FSTRUCT = 287,
+    TABLEAU = 288,
+    DE = 289,
+    RETOURNE = 290,
+    SI = 291,
+    ALORS = 292,
+    SINON = 293,
+    TANT_QUE = 294,
+    FAIRE = 295,
+    POUR = 296,
+    CSTE_ENTIERE = 297,
+    CSTE_REEL = 298,
+    CSTE_CHAINE = 299,
+    CSTE_CHAR = 300,
+    VIDE = 301,
+    ACCOLADE_FERMANTE = 302,
+    ACCOLADE_OUVRANT = 303,
+    PARENTHESE_FERMANTE = 304,
+    PARENTHESE_OUVRANTE = 305,
+    CROCHET_OUVRANT = 306,
+    CROCHET_FERMANT = 307,
+    PLUS = 308,
+    MOINS = 309,
+    MULT = 310,
+    DIV = 311,
+    OPAFF = 312,
+    LIRE = 313,
+    ECRIRE = 314
   };
 #endif
 /* Tokens.  */
@@ -125,37 +128,40 @@ extern int yydebug;
 #define DEUX_POINTS 278
 #define POINT_POINT 279
 #define VIRGULE 280
-#define TYPE 281
-#define VARIABLE 282
-#define PROCEDURE 283
-#define FONCTION 284
-#define STRUCT 285
-#define FSTRUCT 286
-#define TABLEAU 287
-#define DE 288
-#define RETOURNE 289
-#define SI 290
-#define ALORS 291
-#define SINON 292
-#define TANT_QUE 293
-#define FAIRE 294
-#define POUR 295
-#define CSTE_ENTIERE 296
-#define CSTE_REEL 297
-#define VIDE 298
-#define ACCOLADE_FERMANTE 299
-#define ACCOLADE_OUVRANT 300
-#define PARENTHESE_FERMANTE 301
-#define PARENTHESE_OUVRANTE 302
-#define CROCHET_OUVRANT 303
-#define CROCHET_FERMANT 304
-#define PLUS 305
-#define MOINS 306
-#define MULT 307
-#define DIV 308
-#define OPAFF 309
-#define LIRE 310
-#define ECRIRE 311
+#define POINT 281
+#define TYPE 282
+#define VARIABLE 283
+#define PROCEDURE 284
+#define FONCTION 285
+#define STRUCT 286
+#define FSTRUCT 287
+#define TABLEAU 288
+#define DE 289
+#define RETOURNE 290
+#define SI 291
+#define ALORS 292
+#define SINON 293
+#define TANT_QUE 294
+#define FAIRE 295
+#define POUR 296
+#define CSTE_ENTIERE 297
+#define CSTE_REEL 298
+#define CSTE_CHAINE 299
+#define CSTE_CHAR 300
+#define VIDE 301
+#define ACCOLADE_FERMANTE 302
+#define ACCOLADE_OUVRANT 303
+#define PARENTHESE_FERMANTE 304
+#define PARENTHESE_OUVRANTE 305
+#define CROCHET_OUVRANT 306
+#define CROCHET_FERMANT 307
+#define PLUS 308
+#define MOINS 309
+#define MULT 310
+#define DIV 311
+#define OPAFF 312
+#define LIRE 313
+#define ECRIRE 314
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
