@@ -1,6 +1,0 @@
-PROG
-var p20 : int;
-BEGIN
-inst_void;
-x12=m12;
-END
