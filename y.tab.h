@@ -101,7 +101,8 @@ extern int yydebug;
     DIV = 311,
     OPAFF = 312,
     LIRE = 313,
-    ECRIRE = 314
+    ECRIRE = 314,
+    ERROR = 315
   };
 #endif
 /* Tokens.  */
@@ -162,6 +163,7 @@ extern int yydebug;
 #define OPAFF 312
 #define LIRE 313
 #define ECRIRE 314
+#define ERROR 315
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

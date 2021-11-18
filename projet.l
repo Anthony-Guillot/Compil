@@ -55,7 +55,7 @@ bool {return BOOLEEN;}
 \} {return ACCOLADE_FERMANTE;}
 0|([1-9][0-9]*) {return CSTE_ENTIERE;}
 0|([1-9][0-9]*)\.([0-9]*[1-9])|0 {return CSTE_REEL;}
-\"[a-zA-Z][a-zA-Z]+\" {return CSTE_CHAINE;}
+\"(.!\")*\" {return CSTE_CHAINE;}
 \"[a-zA-Z]\" {return CSTE_CHAR;}
 inst_void {return VIDE;}
     /*--- Déclaration des oppérateur ---*/

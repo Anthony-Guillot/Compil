@@ -156,7 +156,7 @@ ALORS liste_instructions
 ;
 
   /*--- Strucuture While ---*/
-tant_que:TANT_QUE expression_booleenne FAIRE liste_instructions
+tant_que:TANT_QUE PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE FAIRE liste_instructions
 ;
 
   /*--- Strucuture d'une affectation ---*/
@@ -223,9 +223,9 @@ variable:IDF
 
 tableau:IDF CROCHET_OUVRANT expression_arithmetique CROCHET_FERMANT;
 
-suite_ecriture:
-              | VIRGULE variable suite_ecriture
-              ; 
+suite_ecriture:variable
+| VIRGULE variable suite_ecriture
+; 
 %%
 int yyerror(){
   printf("Erreur de syntaxe à la ligne %d\n",numligne);
