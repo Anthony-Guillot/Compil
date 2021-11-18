@@ -207,12 +207,14 @@ opbool: EGALE
 
 lecture: LIRE PARENTHESE_OUVRANTE liste_variables PARENTHESE_FERMANTE;
 
-ecriture: ECRIRE PARENTHESE_OUVRANTE format suite_ecriture PARENTHESE_FERMANTE;
+ecriture: ECRIRE PARENTHESE_OUVRANTE format PARENTHESE_FERMANTE;
 
 liste_variables:variable;
 |liste_variables VIRGULE variable;
 
-format:
+format: format+format
+|CSTE_CHAINE
+|variable
 ;
 
 variable:IDF
@@ -223,9 +225,6 @@ variable:IDF
 
 tableau:IDF CROCHET_OUVRANT expression_arithmetique CROCHET_FERMANT;
 
-suite_ecriture:variable
-| VIRGULE variable suite_ecriture
-; 
 %%
 int yyerror(){
   printf("Erreur de syntaxe à la ligne %d\n",numligne);
