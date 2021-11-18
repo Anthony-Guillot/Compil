@@ -20,7 +20,7 @@
 /*---TOKEN concernant les boucles---*/
 %token SI ALORS SINON TANT_QUE FAIRE POUR
 /*---TOKEN concernant les constantes---*/
-%token CSTE_ENTIERE CSTE_REEL
+%token CSTE_ENTIERE CSTE_REEL CSTE_CHAINE CSTE_CHAR
 /*---TOKEN vide---*/
 %token VIDE
 /*---TOKEN de ponctuation--*/
@@ -89,6 +89,8 @@ instruction:affectation
 |appel
 |VIDE
 |RETOURNE resultat_retourne
+|lecture
+|ecriture
 ;
 
 /*-----------------------------------------------------------------------*/
@@ -158,7 +160,7 @@ tant_que:TANT_QUE expression_booleenne FAIRE liste_instructions
   /*--- Strucuture d'une affectation ---*/
 affectation:variable OPAFF expression_arithmetique
 ;
-1:IDF
+variable:IDF
 |IDF suite_crochet
 ;
 suite_crochet:CROCHET_OUVRANT expression_arithmetique CROCHET_FERMANT
