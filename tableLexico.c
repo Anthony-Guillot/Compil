@@ -27,16 +27,33 @@ void init(lexico *table, hashc *tablehc)
     {
         tablehc[i].hashcode = -1;
     }
+        table[0].longueur=3;
+    table[0].lexeme="int";
+    table[0].suivant=-1;
+    table[1].longueur=5;
+    table[1].lexeme="float";
+    table[1].suivant=-1;
+    table[2].longueur=4;
+    table[2].lexeme="bool";
+    table[2].suivant=-1;
+    table[3].longueur=4;
+    table[3].lexeme="char";
+    table[3].suivant=-1;
+
 }
 
 /*---Affichage du tableau lexicographique---*/
 void afficherTableLexico(lexico *table)
 {
+    printf("------------------------------------------\n");
+    printf("|num|Longueur  |Lexeme           |Suivant|\n");
+    printf("------------------------------------------\n");
     int i = 0;
     for (i = 0; table[i].longueur != 0; i++)
     {
-        printf("   %-5d | %-16s | %d\n", table[i].longueur, table[i].lexeme, table[i].suivant);
+        printf("|%-3d|%-9d |%-16s |%-7d|\n", i,table[i].longueur, table[i].lexeme, table[i].suivant);
     }
+    printf("------------------------------------------\n");
 }
 
 /*---Parcours le tableau, et insere le lexeme, sa taille a la fin et retourne la position inserer---*/
@@ -122,4 +139,16 @@ int verif_hachcode(char *lexeme, hashc *tabhc)
 int main()
 {
     init(table, tabhashcode);
+    inserer("anthony",table,tabhashcode);
+    inserer("matthieu",table,tabhashcode);
+    inserer("pierre",table,tabhashcode);
+    inserer("ian",table,tabhashcode);
+    inserer("soan",table,tabhashcode);
+    inserer("alexandre",table,tabhashcode);
+    inserer("ophelie",table,tabhashcode);
+    inserer("thomas",table,tabhashcode);
+    inserer("thomas",table,tabhashcode);
+    inserer("thomas",table,tabhashcode);
+    inserer("thomas",table,tabhashcode);
+    afficherTableLexico(table);
 }
