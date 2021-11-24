@@ -153,6 +153,8 @@ un_arg:expression
   /*--- Strucuture d'un if ---*/
 condition:SI PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE 
 ALORS liste_instructions
+|SI PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE 
+ALORS liste_instructions SINON liste_instructions
 ;
 
   /*--- Strucuture While ---*/
@@ -191,8 +193,8 @@ expression_arithmetique3:PARENTHESE_OUVRANTE expression_arithmetique PARENTHESE_
 ;
 
 
-/*--- Liste des expression boolenes utilisé utilisé dans des conditions ---*/
-expression_booleenne: nom_type opbool nom_type
+/*--- Liste des expressiony boolenes utilisé utilisé dans des conditions ---*/
+expression_booleenne: expression_arithmetique opbool expression_arithmetique
 |expression_booleenne AND expression_booleenne
 |expression_booleenne OR expression_booleenne
 ;
@@ -212,7 +214,7 @@ ecriture: ECRIRE PARENTHESE_OUVRANTE format PARENTHESE_FERMANTE;
 liste_variables:variable;
 |liste_variables VIRGULE variable;
 
-format: format+format
+format: format PLUS format
 |CSTE_CHAINE
 |variable
 ;
