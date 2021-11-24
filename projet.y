@@ -162,14 +162,9 @@ tant_que:TANT_QUE PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE F
 ;
 
   /*--- Strucuture d'une affectation ---*/
-affectation:variable OPAFF expression_arithmetique
+affectation:variable OPAFF expression
 ;
-variable:IDF
-|IDF suite_crochet
-;
-suite_crochet:CROCHET_OUVRANT expression_arithmetique CROCHET_FERMANT
-|CROCHET_OUVRANT expression_arithmetique CROCHET_FERMANT suite_crochet
-;
+
 /*--- description des formes possibles de toutes les expressions (arithmétiques et booléennes) ---*/
 
 expression:expression_arithmetique
@@ -188,8 +183,8 @@ expression_arithmetique2:expression_arithmetique2 MULT expression_arithmetique3
 expression_arithmetique3:PARENTHESE_OUVRANTE expression_arithmetique PARENTHESE_FERMANTE
 |CSTE_ENTIERE
 |CSTE_REEL
-|lecture
-|IDF
+|CSTE_CHAINE
+|variable
 ;
 
 
@@ -209,23 +204,21 @@ opbool: EGALE
 
 lecture: LIRE PARENTHESE_OUVRANTE liste_variables PARENTHESE_FERMANTE;
 
-ecriture: ECRIRE PARENTHESE_OUVRANTE format PARENTHESE_FERMANTE;
+ecriture: ECRIRE PARENTHESE_OUVRANTE CSTE_CHAINE suite_format PARENTHESE_FERMANTE;
 
 liste_variables:variable;
 |liste_variables VIRGULE variable;
 
-format: format PLUS format
-|CSTE_CHAINE
-|variable
+suite_format: 
+|VIRGULE variable suite_format
 ;
 
 variable:IDF
 | tableau
-| variable POINT tableau
-| variable POINT IDF
+| variable POINT variable;
 ;
 
-tableau:IDF CROCHET_OUVRANT expression_arithmetique CROCHET_FERMANT;
+tableau:IDF CROCHET_OUVRANT expression CROCHET_FERMANT;
 
 %%
 int yyerror(){
@@ -233,5 +226,6 @@ int yyerror(){
  }
 
 int main(){
+  
   return yyparse();
 }

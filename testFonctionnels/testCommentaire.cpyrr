@@ -1,0 +1,11 @@
+PROG
+BEGIN
+    //ceci est un test de la gestion des commentaires sur une ligne
+    if(1 < 2 )then 
+    BEGIN
+        /*test des commentaires sur plusieurs lignes
+        il y a une deuxieme lignes
+        et meme une troisieme */
+        write("Les commentaire marchent");
+    END;
+END

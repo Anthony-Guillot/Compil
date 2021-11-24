@@ -1,0 +1,18 @@
+PROG
+var age : int;
+type tableauEntier : tab[0..20]of int; 
+type date : struct 
+    jour : int ;
+    mois : int ;
+    annee : int endstruct;
+proc addition(x:int;y:int)
+BEGIN
+    return (x + y);
+END;
+fonc multiplication(x:int;y:int) return int 
+BEGIN
+    return (x*y);
+END;
+BEGIN
+    inst_void;
+END

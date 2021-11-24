@@ -1,11 +1,13 @@
 /*--- Inclusion des fichiers ---*/
 %{
 #include "y.tab.h"
+#include "tableLexico.h"
 #define ERREUR -99
 int numligne=1; 
 %}
 %%
-
+\/\*([^*]|\*+[^*/])*\*+\/ {;}
+\/\/.* {;}
     /*---Declaration des debuts de declarations---*/
 var {return VARIABLE;}
 proc {return PROCEDURE;}
@@ -55,8 +57,8 @@ bool {return BOOLEEN;}
 \} {return ACCOLADE_FERMANTE;}
 0|([1-9][0-9]*) {return CSTE_ENTIERE;}
 0|([1-9][0-9]*)\.([0-9]*[1-9])|0 {return CSTE_REEL;}
-\"(.!\")*\" {return CSTE_CHAINE;}
 \"[a-zA-Z]\" {return CSTE_CHAR;}
+\".*\" {return CSTE_CHAINE;}
 inst_void {return VIDE;}
     /*--- Déclaration des oppérateur ---*/
 \= {return OPAFF;}
@@ -81,5 +83,9 @@ inst_void {return VIDE;}
 
     /*---gestion de la ligne d'erreur---*/
 [\n]  {numligne++;}
+
+    /*---gestion des commentaires sur plusieurs ou une seul lignes---*/
+
+
 \" {return ERROR;}
 %%

@@ -1,0 +1,8 @@
+PROG
+var age : int;
+BEGIN
+    while(age<18)do
+    BEGIN   
+        age = age + 1;
+    END;
+END
