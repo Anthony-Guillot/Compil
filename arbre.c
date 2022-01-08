@@ -23,6 +23,12 @@ void afficher_arbre(arbre a){
     case FUN:
         fprintf(stderr,"FUN");
         break;
+    case AFFECT:
+        fprintf(stderr,"AFFECT");
+        break;
+    case OP_BIN:
+        fprintf(stderr,"OP_BIN");
+        break;
     default:
         break;
     }
@@ -38,7 +44,20 @@ void afficher_arbre(arbre a){
     
 }
 
-int main(){
+arbre creer_arbre(int type,int declaration,int lexico){
+    arbre tmp=(arbre)malloc(sizeof(noeud));
+    tmp->fils=NULL;
+    tmp->frere=NULL;
+    tmp->num_declaration = declaration;
+    tmp->num_lexi =lexico;
+    tmp->racine_type=type;
+    return tmp;
+}
 
-    exit(EXIT_SUCCESS);
+void inserer_fils(arbre pere,arbre fils){
+    pere->fils=fils;
+}
+
+void inserer_frere(arbre pere, arbre frere){
+    pere->frere=frere;
 }

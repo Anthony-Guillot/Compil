@@ -17,6 +17,7 @@
 #define MOINS 9
 #define MULT 10
 #define DIV 11
+#define OP_BIN 12
 
 typedef struct noeud
 {
@@ -27,8 +28,11 @@ typedef struct noeud
     struct noeud * frere; /* pointeur vers l'arbre frère */
 }noeud;
 
-typedef struct noeud * arbre;
+typedef noeud * arbre;
 
 void afficher_arbre(arbre a);
+arbre creer_arbre(int type,int declaration,int lexico);
+void inserer_fils(arbre pere,arbre fils);
+void inserer_frere(arbre pere, arbre frere);
 
 #endif
