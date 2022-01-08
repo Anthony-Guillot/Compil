@@ -30,7 +30,7 @@ typedef struct noeud
 
 typedef noeud * arbre;
 
-void afficher_arbre(arbre a);
+void afficher_arbre(arbre a,int i);
 arbre creer_arbre(int type,int declaration,int lexico);
 void inserer_fils(arbre pere,arbre fils);
 void inserer_frere(arbre pere, arbre frere);

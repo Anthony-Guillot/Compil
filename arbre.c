@@ -1,45 +1,55 @@
 #include"arbre.h"
 
 /* affiche dans le terminal un arbre (non fini) */
-void afficher_arbre(arbre a){
+void afficher_arbre(arbre a,int tab){
+    int i=0;
+    char *chaine,* c="  ";
     switch (a->racine_type)
     {
     case STR:
-        fprintf(stderr,"STR");
+        chaine="STR";
         break;
     case TAB:
-        fprintf(stderr,"TAB");
+        chaine="TAB";
         break;
     case VAR:
-        fprintf(stderr,"VAR");
+        chaine="VAR";
         /* reste à ajouter les numéro*/
         break;
     case PARAM:
-        fprintf(stderr,"PARAM");
+        chaine="PARAM";
         break;
     case PROC:
-        fprintf(stderr,"PROC");
+        chaine="PROC";
         break;
     case FUN:
-        fprintf(stderr,"FUN");
+        chaine="FUN";
         break;
     case AFFECT:
-        fprintf(stderr,"AFFECT");
+        chaine="AFFECT";
         break;
     case OP_BIN:
-        fprintf(stderr,"OP_BIN");
+        chaine="OP_BIN";
         break;
     default:
         break;
     }
-    if (a->frere!=NULL)
-    {
-        fprintf(stderr,"\t");
-        afficher_arbre(a->frere);
+
+    fprintf(stderr,"%10s",chaine);
+    
+    if (a->frere!=NULL){
+        tab++;
+        afficher_arbre(a->frere,tab);
     }
+    
+        
     if(a->fils!=NULL){
+        tab--;
         fprintf(stderr,"\n");
-        afficher_arbre(a->fils);
+        for(i=0;i<tab;i++){
+            fprintf(stderr,"%10s",c);
+        }
+        afficher_arbre(a->fils,tab);
     }
     
 }
