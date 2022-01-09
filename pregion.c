@@ -1,40 +1,81 @@
-#define TAILLE_PILE 100;
+#include "pregion.h"
 
-typedef pile{
-  short taille;
-  char valeurs[TAILLE_PILE] 
-}
-/* NIS = taille */
-pile p;
-char region=0;
 
 void incr_num_region() {
   region ++;
 }
 
-void empiler_region(int reg){
-  p.valeurs[p.taille]= reg;
+/* NIS = taille */
+void nispile(){
+  return p.taille;
+}
+
+void empiler_region(){
+  incr_num_region();
+  p.valeurs[p.taille]= region;
   p.taille ++;
 }
-int depiler_region(){
-  p.taille --;
-  return p.valeurs[p.taille];
+
+void depiler_region(){
+  if (p.taille!=1){
+    p.taille --;
+  }
 }
 
 int sommet_pile(){
   return p.valeurs[p.taille-1];
+}
 
-pile initialiser pile(pile p){
-  p.taille=1;
-  p.valeurs[0]=0;
-  return p;
+/*Si false alors non déclarer*/
+/*Regarder valeurs dans tableDecla les plus lointaine*/
+int estdanspile(int region){
+  int n;
+  for (n=p.taille-1; n>=0; n--){
+    if (p.valeurs[n]==region){
+      return 1;
+    }
+  }
+  return 0;
+}
+
+pile initpileR(pile p){
+ p.taille=1;
+ p.valeurs[0]=0;
+ return p;
 }
 
 int num_region(){
-  return region;
+ return region;
 }
 
-int main(){
-  
-  
+void afficherPile(){
+  int n;
+  for (n=p.taille-1; n>=0; n--){
+    printf("%d\n", p.valeurs[n]);
+  }
 }
+
+/*
+int main(){
+  p=initpileR(p);
+  afficherPile();
+  printf("\n");
+  empiler_region();
+  empiler_region();
+  afficherPile();
+  printf("\n");
+  depiler_region();
+  empiler_region();
+  afficherPile();
+  printf("\n");
+  if(estdanspile(1)){
+    printf("%d\n",sommet_pile());
+  }
+  depiler_region();
+  depiler_region();
+  depiler_region();
+  depiler_region();
+  afficherPile();
+
+}
+*/
