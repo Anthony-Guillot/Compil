@@ -1,7 +1,6 @@
 #include "tableRepre.h"
 
 
-
 void initrepre(){
   int n;
   for (n=0; n<1000; n++){
@@ -48,8 +47,7 @@ void ajoutTRstruct(int taille){
     exit(-1);
   }
   initibase();
-  tablerepre[i]=taille;
-  i++;
+  tablerepre[ibase]=taille;
   verif=taille;
 }
 
@@ -66,8 +64,7 @@ void ajoutTRtab(int type, int nb){
   initibase();
   tablerepre[i]= type;
   i++;
-  tablerepre[i]= nb;
-  i++;
+  tablerepre[ibase]= nb;
   verif = nb;
 }
 
@@ -100,9 +97,8 @@ void ajoutTRfonc(int type, int nb){
   }
   initibase();
   tablerepre[i]= type;
-  i++
-  tablerepre[i]= nb;
   i++;
+  tablerepre[ibase]= nb;
   verif = nb;
 }
 
@@ -116,8 +112,7 @@ void ajoutTRproc(int nb){
     exit(-1);
   }
   initibase();
-  tablerepre[i]= nb;
-  i++;
+  tablerepre[ibase]= nb;
   verif = nb;
 }
 
@@ -150,8 +145,8 @@ void afficherTR(){
   printf("\n");
 
 }
-
-/*int main(){
+/*
+int main(){
   initrepre();
   ajoutTRstruct(3);
   ajoutTRchamp(1,1,1);
@@ -180,7 +175,10 @@ void afficherTR(){
 
   ajoutTRproc(2);
   ajoutTRpfval(2, 0);
+  printf("%d\n", verification());
   ajoutTRpfval(0, 1);
+  printf("%d\n", verification());
+  printf("%d\n", getibase());
 
   afficherTR();
   exit(0);
