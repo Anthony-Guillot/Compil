@@ -46,6 +46,8 @@ void init()
 void afficherTableLexico()
 {
     printf("------------------------------------------\n");
+    printf("            Table lexicographique         \n");
+    printf("------------------------------------------\n");
     printf("|num|Longueur  |Lexeme           |Suivant|\n");
     printf("------------------------------------------\n");
     int i = 0;
@@ -54,6 +56,15 @@ void afficherTableLexico()
         printf("|%-3d|%-9d |%-16s |%-7d|\n", i,table[i].longueur, table[i].lexeme, table[i].suivant);
     }
     printf("------------------------------------------\n");
+    printf("               Table Hashcode         \n");
+    printf("------------------------------------------\n");
+    printf("|num|Hash|\n");
+    printf("--------------\n");
+    for (i = 0; i<32; i++)
+    {
+        printf("|%-3d|%-9d|\n", i,tabhashcode[i].hashcode);
+    }
+    printf("--------------\n");
 }
 
 /*---Parcours le tableau, et insere le lexeme, sa taille a la fin et retourne la position inserer---*/
@@ -69,11 +80,12 @@ int insererbis(char *lexeme)
             break;
         }
     }
-    return i - 1;
+    return i;
 }
 
 /*---Verifier si le lexeme a position donnée est different , si oui, il verifie le suivant s'il en existe un---*/
-void verif_lexeme(char *lexeme, int position){
+int  verif_lexeme(char *lexeme, int position)
+{
     int longeur;
     longeur = strlen(lexeme);
     if (longeur != table[position].longueur)
@@ -91,7 +103,7 @@ void verif_lexeme(char *lexeme, int position){
     {
         if (strcmp(lexeme, table[position].lexeme) == 0)
         {
-            return;
+            return position;
         }
         else
         {
@@ -101,7 +113,7 @@ void verif_lexeme(char *lexeme, int position){
             }
             else
             {
-                verif_lexeme(lexeme,table[position].suivant);
+                verif_lexeme(lexeme, table[position].suivant);
             }
         }
     }
@@ -135,19 +147,4 @@ int verif_hachcode(char *lexeme)
         return tabhashcode[hc].hashcode;
     }
 }
-int main()
-{
-    init(table, tabhashcode);
-    inserer("anthony");
-    inserer("matthieu");
-    inserer("pierre");
-    inserer("ian");
-    inserer("soan");
-    inserer("alexandre");
-    inserer("ophelie");
-    inserer("thomas");
-    inserer("thomas");
-    inserer("thomas");
-    inserer("thomas");
-    afficherTableLexico();
-}
+
