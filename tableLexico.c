@@ -15,7 +15,7 @@ int calcul_hascode(char *mot, int taille)
 }
 
 /*---Initialise le tableau de hashcode et le tableau lexico---*/
-void init(lexico *table, hashc *tablehc)
+void init()
 {
     for (int i = 0; i < 500; i++)
     {
@@ -25,7 +25,7 @@ void init(lexico *table, hashc *tablehc)
     }
     for (int i = 0; i < 32; i++)
     {
-        tablehc[i].hashcode = -1;
+        tabhashcode[i].hashcode = -1;
     }
         table[0].longueur=3;
     table[0].lexeme="int";
@@ -43,7 +43,7 @@ void init(lexico *table, hashc *tablehc)
 }
 
 /*---Affichage du tableau lexicographique---*/
-void afficherTableLexico(lexico *table)
+void afficherTableLexico()
 {
     printf("------------------------------------------\n");
     printf("|num|Longueur  |Lexeme           |Suivant|\n");
@@ -57,7 +57,7 @@ void afficherTableLexico(lexico *table)
 }
 
 /*---Parcours le tableau, et insere le lexeme, sa taille a la fin et retourne la position inserer---*/
-int insererbis(char *lexeme, lexico *table)
+int insererbis(char *lexeme)
 {
     int i;
     for (i = 0; i < 500; i++)
@@ -73,19 +73,18 @@ int insererbis(char *lexeme, lexico *table)
 }
 
 /*---Verifier si le lexeme a position donnée est different , si oui, il verifie le suivant s'il en existe un---*/
-void verif_lexeme(char *lexeme, lexico *table, int position)
-{
+void verif_lexeme(char *lexeme, int position){
     int longeur;
     longeur = strlen(lexeme);
     if (longeur != table[position].longueur)
     {
         if (table[position].suivant == -1)
         {
-            table[position].suivant = insererbis(lexeme, table);
+            table[position].suivant = insererbis(lexeme);
         }
         else
         {
-            verif_lexeme(lexeme, table, table[position].suivant);
+            verif_lexeme(lexeme, table[position].suivant);
         }
     }
     else
@@ -98,57 +97,57 @@ void verif_lexeme(char *lexeme, lexico *table, int position)
         {
             if (table[position].suivant == -1)
             {
-                table[position].suivant = insererbis(lexeme, table);
+                table[position].suivant = insererbis(lexeme);
             }
             else
             {
-                verif_lexeme(lexeme, table, table[position].suivant);
+                verif_lexeme(lexeme,table[position].suivant);
             }
         }
     }
 }
 
 /*---Verifie le hashcode pour savoir ou commencer a parcourir les verifications---*/
-void inserer(char *lexeme, lexico *table, hashc *tablehc)
+void inserer(char *lexeme)
 {
-    int retour = verif_hachcode(lexeme, tablehc);
+    int retour = verif_hachcode(lexeme);
     if (retour == -1)
     {
-        tablehc[calcul_hascode(lexeme, strlen(lexeme))].hashcode = insererbis(lexeme, table);
+        tabhashcode[calcul_hascode(lexeme, strlen(lexeme))].hashcode = insererbis(lexeme);
     }
     else
     {
-        verif_lexeme(lexeme, table, retour);
+        verif_lexeme(lexeme, retour);
     }
 }
 
 /*---Verifie si le haschode est deja present, et si oui, renvoie sa poosition---*/
-int verif_hachcode(char *lexeme, hashc *tabhc)
+int verif_hachcode(char *lexeme)
 {
     int hc;
     hc = calcul_hascode(lexeme, strlen(lexeme));
-    if (tabhc[hc].hashcode == -1)
+    if (tabhashcode[hc].hashcode == -1)
     {
         return -1;
     }
     else
     {
-        return tabhc[hc].hashcode;
+        return tabhashcode[hc].hashcode;
     }
 }
 int main()
 {
     init(table, tabhashcode);
-    inserer("anthony",table,tabhashcode);
-    inserer("matthieu",table,tabhashcode);
-    inserer("pierre",table,tabhashcode);
-    inserer("ian",table,tabhashcode);
-    inserer("soan",table,tabhashcode);
-    inserer("alexandre",table,tabhashcode);
-    inserer("ophelie",table,tabhashcode);
-    inserer("thomas",table,tabhashcode);
-    inserer("thomas",table,tabhashcode);
-    inserer("thomas",table,tabhashcode);
-    inserer("thomas",table,tabhashcode);
-    afficherTableLexico(table);
+    inserer("anthony");
+    inserer("matthieu");
+    inserer("pierre");
+    inserer("ian");
+    inserer("soan");
+    inserer("alexandre");
+    inserer("ophelie");
+    inserer("thomas");
+    inserer("thomas");
+    inserer("thomas");
+    inserer("thomas");
+    afficherTableLexico();
 }
