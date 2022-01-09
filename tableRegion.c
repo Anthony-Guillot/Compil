@@ -1,31 +1,29 @@
 #include"tableRegion.h"
 
-region test[50];
-
 void init_tab_region(){
     int i=0;
-    for(i=0;i<50;i++){
-        test[i].taille=-1;
-        test[i].nis=-1;
-        test[i].repre=NULL;
+    for(i=0;i<MAX_REGION;i++){
+        tab_region[i].taille=-1;
+        tab_region[i].nis=-1;
+        tab_region[i].repre=NULL;
     }
 }
 
 void inserer_region(int taille,int nis,arbre repre){
     int i=0;
-    while(test[i].taille!=-1 && i<50){
+    while(i<MAX_REGION && tab_region[i].taille!=-1){
         i++;
     }
-    test[i].taille=taille;
-    test[i].nis=nis;
-    test[i].repre=repre;
+    tab_region[i].taille=taille;
+    tab_region[i].nis=nis;
+    tab_region[i].repre=repre;
 }
 
 void afficher_region(){
     int i=0;
     fprintf(stderr,"\n----------------------\n| Num | Taille | NIS |\n----------------------\n");
-    while(test[i].taille!=-1 && i<50){
-        fprintf(stderr,"| %-3d | %-6d | %-3d |\n----------------------\n",i,test[i].taille,test[i].nis);
+    while(i<MAX_REGION && tab_region[i].taille!=-1){
+        fprintf(stderr,"| %-3d | %-6d | %-3d |\n----------------------\n",i,tab_region[i].taille,tab_region[i].nis);
         i++;
     }
     fprintf(stderr,"\n");
