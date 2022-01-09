@@ -47,6 +47,7 @@ void ajoutTRstruct(int taille){
     fprintf(stderr, "Err argument table representations TRstruct\n");
     exit(-1);
   }
+  initibase();
   tablerepre[i]=taille;
   i++;
   verif=taille;
@@ -62,6 +63,7 @@ void ajoutTRtab(int type, int nb){
     fprintf(stderr, "Err argument table representations TRtab\n");
     exit(-1);
   }
+  initibase();
   tablerepre[i]= type;
   i++;
   tablerepre[i]= nb;
@@ -96,8 +98,9 @@ void ajoutTRfonc(int type, int nb){
     fprintf(stderr, "Type fonction invalide");
     exit(-1);
   }
+  initibase();
   tablerepre[i]= type;
-  i++;
+  i++
   tablerepre[i]= nb;
   i++;
   verif = nb;
