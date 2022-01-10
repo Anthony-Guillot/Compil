@@ -1,29 +1,42 @@
 #include "pregion.h"
-
+int region=0;
+pile p;
 
 void incr_num_region() {
   region ++;
 }
-
+int positionDansPile(int region){
+  int n=0;
+  for(n=0;n<p.taille;n++){
+    if(p.valeurs[n]==region){
+      return n;
+    }
+  }
+  fprintf(stderr,"erreur dans la pile\n");
+  return -1;
+}
 /* NIS = taille */
-void nispile(){
+int nispile(){
   return p.taille;
 }
 
 void empiler_region(){
   incr_num_region();
-  p.valeurs[p.taille]= region;
+  for(int n=p.taille;n>=0;n--){
+    p.valeurs[n]=p.valeurs[n-1];
+  }
+  p.valeurs[0]= region;
   p.taille ++;
 }
 
 void depiler_region(){
-  if (p.taille!=1){
-    p.taille --;
+  for(int n=0;n<p.taille;n++){
+    p.valeurs[n]=p.valeurs[n+1];
   }
 }
 
 int sommet_pile(){
-  return p.valeurs[p.taille-1];
+  return p.valeurs[0];
 }
 
 /*Si false alors non déclarer*/
@@ -38,10 +51,9 @@ int estdanspile(int region){
   return 0;
 }
 
-pile initpileR(pile p){
+void initpileR(){
  p.taille=1;
  p.valeurs[0]=0;
- return p;
 }
 
 int num_region(){

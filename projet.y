@@ -3,6 +3,7 @@
   #include "tableLexico.h"
   #include "tableDecla.h"
   #include "tableRepre.h"
+  #include "pregion.h"
   #include "y.tab.h"
   extern int numligne;
   extern char *yytext;
@@ -83,10 +84,10 @@ une_dimension:expression POINT_POINT expression {$$=($3-$1)+1;nbChamps+=1;TRdimt
 declaration_variable:VARIABLE IDF {nombuffer=strdup(yytext);} DEUX_POINTS nom_type {type=strdup(yytext);ajoutVariable(positionLexeme(nombuffer),positionLexeme(type));}
 ;
 
-declaration_procedure:PROCEDURE {nbChamps=0;setRegion(1);} IDF {ajoutProcedure(positionLexeme(strdup(yytext)));} liste_parametres {ajoutTRproc(nbChamps);} corps {setRegion(0);}
+declaration_procedure:PROCEDURE {nbChamps=0;empiler_region();} IDF {ajoutProcedure(positionLexeme(strdup(yytext)));} liste_parametres {ajoutTRproc(nbChamps);} corps {depiler_region();}
 ;
 
-declaration_fonction:FONCTION {nbChamps=0;setRegion(1);} IDF {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));} liste_parametres RETOURNE type_simple{type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);} corps {setRegion(0);}
+declaration_fonction:FONCTION {nbChamps=0;empiler_region();} IDF {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));} liste_parametres RETOURNE type_simple{type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);} corps {depiler_region();;}
 ;
 /*-----------------------------------------------------------------------*/
   /*--- Strucutures des listes d'instructions---*/
@@ -240,6 +241,7 @@ int yyerror(){
  }
 
 int main(){
+  initpileR();
   initrepre();
   init();
   initDecla();

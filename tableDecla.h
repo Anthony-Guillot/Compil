@@ -8,11 +8,11 @@ int getRegion();
 
 void setRegion(int plus);
 
-int verifRegion(int lexAssocie);
+int verifRegion(int pos1,int nature);
 
 int tailleType(int lexType);
 
-int chercheType(int region,int lexeme);
+int chercheType(int lexeme);
 
 void ajoutTypeStruct(int lexAssocie,int taille);
 

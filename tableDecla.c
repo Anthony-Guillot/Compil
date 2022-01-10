@@ -1,40 +1,47 @@
 #include "tableDecla.h"
-
+#include "pregion.h"
+/*Author GUILLOT Anthony*/
+/*Co-author CONDOM Mahieu*/
 int tabledecla[5][1000];
 int debordement_libre = 500;
-int region_courante=0;
 
-int getRegion(){
-  return region_courante;
-}
-
-void setRegion(int plus){
-  if(plus==1){
-    region_courante+=1;
+int verifInsertion(int pos1,int nature){
+  if(tabledecla[0][pos1]==nature && tabledecla[2][pos1]==sommet_pile()){
+    return 1;
   }
   else{
-    region_courante-=1;
+    return 0;
   }
 }
-
-int verifRegion(int lexAssocie){
+int verifRegion(int lexAssocie,int nature){
   if(tabledecla[0][lexAssocie]!=-1){
-    if(tabledecla[1][lexAssocie]==-1){
-      tabledecla[1][lexAssocie]=debordement_libre;
-      lexAssocie=debordement_libre;
-      debordement_libre+=1;
-      return lexAssocie;
+    if(verifInsertion(lexAssocie,nature)==0){
+      if(tabledecla[1][lexAssocie]==-1){
+        tabledecla[1][lexAssocie]=debordement_libre;
+        lexAssocie=debordement_libre;
+        debordement_libre+=1;
+        return lexAssocie;
+      } 
+      else{
+        lexAssocie=tabledecla[1][lexAssocie];
+        while (tabledecla[1][lexAssocie]!=-1)
+        {
+          if(verifInsertion(lexAssocie,nature)==0){
+              lexAssocie=tabledecla[1][lexAssocie];
+          }
+          else{
+            fprintf(stderr,"Erreur une variable existe deja pour son nom\n");
+            exit(-1);
+          }
+        }
+        tabledecla[1][lexAssocie]=debordement_libre;
+        lexAssocie=debordement_libre;
+        debordement_libre+=1;
+        return lexAssocie;
+      }
     }
     else{
-      lexAssocie=tabledecla[1][lexAssocie];
-      while (tabledecla[1][lexAssocie]!=-1)
-      {
-        lexAssocie=tabledecla[1][lexAssocie];
-      }
-      tabledecla[1][lexAssocie]=debordement_libre;
-      lexAssocie=debordement_libre;
-      debordement_libre+=1;
-      return lexAssocie;
+      fprintf(stderr,"Erreur une variable existe deja pour son nom\n");
     }
   }
   else{
@@ -43,12 +50,12 @@ int verifRegion(int lexAssocie){
 }
 
 int tailleType(int lexType){
-  return tabledecla[4][chercheType(region_courante,lexType)];
+  return tabledecla[4][chercheType(lexType)];
 }
 
-int chercheType(int region,int lexeme){
-  int i,dernier=-1;
-  if(tabledecla[1][lexeme]<=region &&(tabledecla[0][lexeme]==1 || tabledecla[0][lexeme]==2 || tabledecla[0][lexeme]==0)){
+int chercheType(int lexeme){
+  int i,dernier=-1,min=nispile();
+  if(estdanspile(tabledecla[2][lexeme]) &&(tabledecla[0][lexeme]==1 || tabledecla[0][lexeme]==2 || tabledecla[0][lexeme]==0)){
     dernier=lexeme;
   }
   while(tabledecla[1][lexeme]!=-1){
@@ -58,57 +65,59 @@ int chercheType(int region,int lexeme){
     else{
       lexeme=tabledecla[1][lexeme];
     }
-    if(tabledecla[1][lexeme]<=region &&(tabledecla[0][lexeme]==1 || tabledecla[0][lexeme]==2)){
-      dernier=lexeme;
+    if(estdanspile(tabledecla[2][lexeme])){
+      if(positionDansPile(tabledecla[2][lexeme])<min &&(tabledecla[0][lexeme]==1 || tabledecla[0][lexeme]==2 || tabledecla[0][lexeme]==0)){
+        dernier=lexeme;
+      }
     }
   }
   return dernier;
 }
 
 void ajoutTypeStruct(int lexAssocie,int taille){
-  lexAssocie=verifRegion(lexAssocie);
+  lexAssocie=verifRegion(lexAssocie,1);
   tabledecla[0][lexAssocie]=1;
-  tabledecla[2][lexAssocie]=region_courante;
+  tabledecla[2][lexAssocie]=sommet_pile();
   tabledecla[3][lexAssocie]=getibase();
   tabledecla[4][lexAssocie]=taille;
 }
 
 void ajoutTypeTab(int lexAssocie,int taille){
-  lexAssocie=verifRegion(lexAssocie);
+  lexAssocie=verifRegion(lexAssocie,2);
   tabledecla[0][lexAssocie]=2;
-  tabledecla[2][lexAssocie]=region_courante;
+  tabledecla[2][lexAssocie]=sommet_pile();
   tabledecla[3][lexAssocie]=getibase();
   tabledecla[4][lexAssocie]=taille;
 }
 
 void ajoutVariable(int lexAssocie,int typeAssocie){
-  lexAssocie=verifRegion(lexAssocie);
+  lexAssocie=verifRegion(lexAssocie,3);
   tabledecla[0][lexAssocie]=3;
-  tabledecla[2][lexAssocie]=region_courante;
-  tabledecla[3][lexAssocie]=chercheType(region_courante,typeAssocie);
+  tabledecla[2][lexAssocie]=sommet_pile();
+  tabledecla[3][lexAssocie]=chercheType(typeAssocie);
 }
 
 void ajoutParam(int lexAssocie,int typeAssocie){
-  lexAssocie=verifRegion(lexAssocie);
+  lexAssocie=verifRegion(lexAssocie,4);
   tabledecla[0][lexAssocie]=4;
-  tabledecla[2][lexAssocie]=region_courante;
-  tabledecla[3][lexAssocie]=chercheType(region_courante,typeAssocie);
+  tabledecla[2][lexAssocie]=sommet_pile();
+  tabledecla[3][lexAssocie]=chercheType(typeAssocie);
 }
 
 void ajoutFonction(int lexAssocie){
-  lexAssocie=verifRegion(lexAssocie);
+  lexAssocie=verifRegion(lexAssocie,6);
   tabledecla[0][lexAssocie]=6;
-  tabledecla[2][lexAssocie]=region_courante-1;
+  tabledecla[2][lexAssocie]=sommet_pile()-1;
   tabledecla[3][lexAssocie]=getibase();
-  tabledecla[4][lexAssocie]=region_courante;
+  tabledecla[4][lexAssocie]=sommet_pile();
 }
 
 void ajoutProcedure(int lexAssocie){
-  lexAssocie=verifRegion(lexAssocie);
+  lexAssocie=verifRegion(lexAssocie,5);
   tabledecla[0][lexAssocie]=5;
-  tabledecla[2][lexAssocie]=region_courante-1;
+  tabledecla[2][lexAssocie]=sommet_pile()-1;
   tabledecla[3][lexAssocie]=getibase();
-  tabledecla[4][lexAssocie]=region_courante;
+  tabledecla[4][lexAssocie]=sommet_pile();
 }
 
 void initDecla(){

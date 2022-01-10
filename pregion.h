@@ -8,15 +8,13 @@ typedef struct pile{
  int valeurs[TAILLE_PILE];
 }pile;
 
-pile p;
-int region=0;
-
+int positionDansPile(int region);
 void incr_num_region();
-void nispile();
+int nispile();
 void empiler_region();
 void depiler_region();
 int sommet_pile();
 int estdanspile(int region);
-pile initpileR(pile p);
+void initpileR();
 int num_region();
 void afficherPile();
