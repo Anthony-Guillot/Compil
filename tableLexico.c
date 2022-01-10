@@ -55,6 +55,7 @@ void afficherTableLexico()
     {
         printf("|%-3d|%-9d |%-16s |%-7d|\n", i,table[i].longueur, table[i].lexeme, table[i].suivant);
     }
+    /*
     printf("------------------------------------------\n");
     printf("               Table Hashcode         \n");
     printf("------------------------------------------\n");
@@ -64,7 +65,7 @@ void afficherTableLexico()
     {
         printf("|%-3d|%-9d|\n", i,tabhashcode[i].hashcode);
     }
-    printf("--------------\n");
+    printf("--------------\n");*/
 }
 
 /*---Parcours le tableau, et insere le lexeme, sa taille a la fin et retourne la position inserer---*/
@@ -133,6 +134,16 @@ void inserer(char *lexeme)
     }
 }
 
+int positionLexeme(char *lexeme){
+    int i;
+    for(i=0;i<500;i++){
+        if(strcmp(table[i].lexeme,lexeme)==0){
+            return i;
+        }
+    }
+    return -1;
+}
+
 /*---Verifie si le haschode est deja present, et si oui, renvoie sa poosition---*/
 int verif_hachcode(char *lexeme)
 {
@@ -147,4 +158,3 @@ int verif_hachcode(char *lexeme)
         return tabhashcode[hc].hashcode;
     }
 }
-

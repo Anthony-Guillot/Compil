@@ -1,5 +1,8 @@
 #include "tableRepre.h"
 
+int tablerepre[1000];
+int ibase=0;
+int i=0;
 
 void initrepre(){
   int n;
@@ -7,143 +10,70 @@ void initrepre(){
     tablerepre[n]=-1;
   }
 }
+void iplus(){
+  i+=1;
+}
 
 int getibase(){
   return ibase;
 }
 
-int verification(){
-  return !(verif);
-}
-
-void initibase(){
-  if (i !=1){
-    ibase = i;
-    i = ibase+1;
-  }
-}
-
 void ajoutTRchamp(int type, int nlex, int move){
-  if(i+3>1000 || ibase+3>1000){
-    fprintf(stderr, "Err taille table representation\n");
-  }
+  i++;
   tablerepre[i]=type;
   i++;
   tablerepre[i]=nlex;
   i++;
   tablerepre[i]=move;
-  i++;
-  verif--;
 }
 
 
 void ajoutTRstruct(int taille){
-  if(i+taille*3+1>1000 || ibase+taille*3+1>1000){
-    fprintf(stderr, "Err taille table representation\n");
-    exit(-1);
-  }
-  if(verif!=0){
-    fprintf(stderr, "Err argument table representations TRstruct\n");
-    exit(-1);
-  }
-  initibase();
+  i++;
   tablerepre[ibase]=taille;
-  verif=taille;
+  ibase=i;
 }
 
 
 void ajoutTRtab(int type, int nb){
-  if(i+nb*2+2>1000 || ibase+nb*2+2>1000){
-    fprintf(stderr, "Err taille table representation\n");
-    exit(-1);
-  }
-  if(verif!=0){
-    fprintf(stderr, "Err argument table representations TRtab\n");
-    exit(-1);
-  }
-  initibase();
-  tablerepre[i]= type;
   i++;
-  tablerepre[ibase]= nb;
-  verif = nb;
+  tablerepre[ibase]= type;
+  tablerepre[ibase+1]= nb;
+  ibase=i;
 }
 
 void TRdimtab(int x, int y){
-  if(i+2>1000 || ibase+2>1000){
-    fprintf(stderr, "Err taille table representation\n");
-    exit(-1);
-  }
+  i++;
   tablerepre[i]= x;
   i++;
   tablerepre[i]= y;
-  i++;
-  verif--;
 }
 
-
-
 void ajoutTRfonc(int type, int nb){
-  if(i+nb*2+2>1000 || ibase+nb*2+2>1000){
-    fprintf(stderr, "Err taille table representation");
-    exit(-1);
-  }
-  if(verif!=0){
-    fprintf(stderr, "Err argument table representations TRfonc");
-    exit(-1);
-  }
-  if(type <0 || type >3){
-    fprintf(stderr, "Type fonction invalide");
-    exit(-1);
-  }
-  initibase();
-  tablerepre[i]= type;
   i++;
+  tablerepre[ibase+1]= type;
   tablerepre[ibase]= nb;
-  verif = nb;
+  ibase=i;
 }
 
 void ajoutTRproc(int nb){
-  if(i+nb*2+1>1000 || ibase+nb*2+1>1000){
-    fprintf(stderr, "Err taille table representation");
-    exit(-1);
-  }
-  if(verif!=0){
-    fprintf(stderr, "Err argument table representations TRProc");
-    exit(-1);
-  }
-  initibase();
+  i++;
   tablerepre[ibase]= nb;
-  verif = nb;
+  ibase=i;
 }
 
 void ajoutTRpfval(int lex, int type){
-  if(i+2>1000 || ibase+2>1000){
-    fprintf(stderr, "Err taille table representation");
-    exit(-1);
-  }
-  if(type <0 || type >3){
-    fprintf(stderr, "Type f.arguement invalide\n");
-    exit(-1);
-  }
+  i++;
   tablerepre[i]= lex;
   i++;
   tablerepre[i]= type;
-  i++;
-  verif--;
 }
 
 void afficherTR(){
   int aff=0;
-
-  while((aff!=1000)&& (tablerepre[aff]!=-1)){
-    printf("%d ", tablerepre[aff]);
-    if((aff+1)%25==0){
-      printf("\n");
-    }
-    aff++;
+  for(aff=0;aff<1000 && tablerepre[aff]!=-1;aff++){
+    fprintf(stdout,"%d : %d\n",aff,tablerepre[aff]);
   }
-  printf("\n");
-
 }
 /*
 int main(){

@@ -15,10 +15,10 @@ typedef struct
 }lexico;
 int calcul_hascode(char* mot,int taille);
 void init();
-void verif_lexeme(char * lexeme,int position);
+int verif_lexeme(char * lexeme,int position);
 void afficherTableLexico();
 int insererbis(char * lexeme);
-void verif_lexeme(char * lexeme,int position);
 void inserer(char * lexeme);
 int verif_hachcode(char *lexeme);
+int positionLexeme(char *lexeme);
 #endif

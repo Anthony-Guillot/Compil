@@ -4,7 +4,8 @@ type tableauEntier : tab[0..20]of int;
 type date : struct 
     jour : int ;
     mois : int ;
-    annee : int endstruct;
+    annee : int ;
+    test : tableauEntier endstruct;
 proc addition(x:int;y:int)
 BEGIN
     return (x + y);
