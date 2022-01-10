@@ -8,6 +8,7 @@
   #include "y.tab.h"
   extern int numligne;
   extern char *yytext;
+  arbre a;
   char *nombuffer;
   char *nombuffer2;
   char *type;
@@ -92,22 +93,22 @@ declaration_fonction:FONCTION {nbChamps=0;empiler_region();} IDF {nombuffer=strd
 ;
 /*-----------------------------------------------------------------------*/
   /*--- Strucutures des listes d'instructions---*/
-liste_instructions:DEBUT suite_liste_inst FIN
+liste_instructions:DEBUT suite_liste_inst FIN {a=$2;}
 ;
   /*--- instruction(s) suivis de virgule---*/
-suite_liste_inst:instruction POINT_VIRGULE
-|suite_liste_inst instruction POINT_VIRGULE
+suite_liste_inst:instruction POINT_VIRGULE   {$$=inserer_fils(creer_arbre(CONDITION_BIS,-1,-1),$1);}
+|suite_liste_inst instruction POINT_VIRGULE {$$=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),inserer_frere($2,$1));}
 ;
 
   /*--- Liste des instructions possibles ---*/
-instruction:affectation
-|condition
-|tant_que
-|appel
-|VIDE
-|RETOURNE resultat_retourne
-|ecriture
-|lecture
+instruction:affectation {$$=creer_arbre(VIDE_BIS,-1,-1);}
+|condition {$$=creer_arbre(VIDE_BIS,-1,-1);}
+|tant_que {$$=creer_arbre(VIDE_BIS,-1,-1);}
+|appel {$$=creer_arbre(VIDE_BIS,-1,-1);}
+|VIDE {$$=creer_arbre(VIDE_BIS,-1,-1);}
+|RETOURNE resultat_retourne {$$=creer_arbre(VIDE_BIS,-1,-1);}
+|ecriture {$$=creer_arbre(VIDE_BIS,-1,-1);}
+|lecture {$$=creer_arbre(VIDE_BIS,-1,-1);}
 ;
 
 /*-----------------------------------------------------------------------*/
@@ -149,78 +150,78 @@ un_param:IDF {nombuffer=strdup(yytext);}DEUX_POINTS type_simple {nbChamps+=1;typ
 
   /*--- Strucuture d'un return ---*/
 
-resultat_retourne:PARENTHESE_OUVRANTE expression PARENTHESE_FERMANTE
+resultat_retourne:PARENTHESE_OUVRANTE expression PARENTHESE_FERMANTE {$$=$2;}
 ;
 
-appel:IDF liste_arguments
+appel:IDF liste_arguments  {$$=inserer_fils(creer_arbre(APPEL_BIS,-1,-1),inserer_frere($1,$2))};
 ;
 
 liste_arguments:
-|PARENTHESE_OUVRANTE liste_args PARENTHESE_FERMANTE
+|PARENTHESE_OUVRANTE liste_args PARENTHESE_FERMANTE {$$=$2;}
 ;
 
-liste_args:un_arg
-|liste_args VIRGULE un_arg
+liste_args:un_arg {$$=$1;}
+|liste_args VIRGULE un_arg {$$=$2;}
 ;
 
-un_arg:expression
+un_arg:expression {$$=$1;}
 ;
 
   /*--- Strucuture d'un if ---*/
 condition:SI PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE 
-ALORS liste_instructions
+ALORS liste_instructions {$$=inserer_fils(creer_arbre(CONDITION_BIS,-1,-1),inserer_frere($3,$6));}
 |SI PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE 
-ALORS liste_instructions SINON liste_instructions
+ALORS liste_instructions SINON liste_instructions  {$$=inserer_fils(inserer_frere($6,$8));creer_arbre(CONDITION_BIS,-1,-1),inserer_frere($3,$8));}
 ;
 
   /*--- Strucuture While ---*/
-tant_que:TANT_QUE PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE FAIRE liste_instructions
+tant_que:TANT_QUE PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE FAIRE liste_instructions {$$=inserer_fils(creer_arbre(TQ_BIS,-1,-1),inserer_frere($3,$6));}
 ;
 
   /*--- Strucuture d'une affectation ---*/
-affectation:variable OPAFF expression
+affectation:variable OPAFF expression {$$=inserer_fils(creer_arbre(AFFECT_BIS,-1,-1),inserer_frere($1,$3));}
 ;
 
 /*--- description des formes possibles de toutes les expressions (arithmétiques et booléennes) ---*/
 
-expression:expression_arithmetique
-|expression_booleenne
+expression:expression_arithmetique {$$=$1;}
+|expression_booleenne {$$=$1;}
 ;
-expression_arithmetique:expression_arithmetique PLUS expression_arithmetique2 {$$=$1 + $3;}
-|expression_arithmetique MOINS expression_arithmetique2 {$$=$1 - $3;}
-|expression_arithmetique2
+expression_arithmetique:expression_arithmetique PLUS expression_arithmetique2 {$$=inserer_fils(creer_arbre(PLUS_BIS,-1,-1),inserer_frere($1,$3));}
+|expression_arithmetique MOINS expression_arithmetique2 {$$=inserer_fils(creer_arbre(MOINS_BIS,-1,-1),inserer_frere($1,$3));}
+|expression_arithmetique2 {$$=$1;}
 ;
 
-expression_arithmetique2:expression_arithmetique2 MULT expression_arithmetique3 {$$=$1 * $3;}
-|expression_arithmetique2 DIV expression_arithmetique3 {$$=$1 / $3;}
-|expression_arithmetique3
+expression_arithmetique2:expression_arithmetique2 MULT expression_arithmetique3 {$$=inserer_fils(creer_arbre(MULT_BIS,-1,-1),inserer_frere($1,$3));}
+|expression_arithmetique2 DIV expression_arithmetique3 {$$=inserer_fils(creer_arbre(DIV_BIS,-1,-1),inserer_frere($1,$3));}
+|expression_arithmetique3 {$$=$1;}
 ;
 
 expression_arithmetique3:PARENTHESE_OUVRANTE expression_arithmetique PARENTHESE_FERMANTE
-|CSTE_ENTIERE {$$=$1;}
-|CSTE_REEL {$$=$1;}
-|CSTE_CHAINE {$$=$1;}
-|variable
+|CSTE_ENTIERE {$$=creer_arbre(CSTE_INT_BIS,-1,-1);}
+|CSTE_REEL {$$=creer_arbre(CSTE_FLOAT_BIS,-1,-1);}
+|CSTE_CHAINE {$$=creer_arbre(CSTE_FLOAT_BIS,-1,-1);}
+|variable {$$=$1;}
 ;
 
 
 /*--- Liste des expressiony boolenes utilisé utilisé dans des conditions ---*/
-expression_booleenne: expression_arithmetique opbool expression_arithmetique
-|expression_booleenne AND expression_booleenne
-|expression_booleenne OR expression_booleenne
+expression_booleenne: expression_arithmetique opbool expression_arithmetique {$$=inserer_fils($2,inserer_frere($1,$3));}
+|expression_booleenne AND expression_booleenne {$$=inserer_fils(creer_arbre(AND_BIS,-1,-1),inserer_frere($1,$3));}
+|expression_booleenne OR expression_booleenne {$$=inserer_fils(creer_arbre(OR_BIS,-1,-1),inserer_frere($1,$3));}
 ;
 
-opbool: EGALE
-|DIFF
-|SUP
-|SUPE
-|INF
-|INFE
+opbool: EGALE {$$=creer_arbre(EGALE_BIS,-1,-1);}
+|DIFF {$$=creer_arbre(DIFF_BIS,-1,-1);}
+|SUP {$$=creer_arbre(SUP_BIS,-1,-1);}
+|SUPE {$$=creer_arbre(SUP_EGALE_BIS,-1,-1);}
+|INF {$$=creer_arbre(INF_BIS,-1,-1);}
+|INFE {$$=creer_arbre(INF_EGALE_BIS,-1,-1);}
 ;
 
-lecture: LIRE PARENTHESE_OUVRANTE liste_variables PARENTHESE_FERMANTE;
+lecture: LIRE PARENTHESE_OUVRANTE liste_variables PARENTHESE_FERMANTE {$$=creer_arbre(CSTE_INT_BIS,-1,-1);};
 
-ecriture: ECRIRE PARENTHESE_OUVRANTE CSTE_CHAINE suite_format PARENTHESE_FERMANTE;
+ecriture: ECRIRE PARENTHESE_OUVRANTE CSTE_CHAINE suite_format PARENTHESE_FERMANTE {$$=creer_arbre(CSTE_INT_BIS,-1,-1);};
 
 liste_variables:variable;
 |liste_variables VIRGULE variable;
@@ -229,13 +230,12 @@ suite_format:
 |VIRGULE variable suite_format
 ;
 
-variable:IDF
-| tableau
-| variable POINT variable;
+variable:IDF {$$=creer_arbre(IDF_BIS,chercheVar(positionLexeme(strdup(yytext))),positionLexeme(strdup(yytext)));}
+| tableau {$$=inserer_fils(creer_arbre(TAB_BIS,-1,-1),$1);}
+| variable POINT variable {$$=inserer_fils(creer_arbre(POINT_BIS,-1,-1),inserer_frere($1,$3));}
 ;
 
-tableau:IDF CROCHET_OUVRANT expression CROCHET_FERMANT;
-
+tableau:IDF CROCHET_OUVRANT expression CROCHET_FERMANT {$$=creer_arbre("TAB_BIS",-1,-1);} ;
 %%
 int yyerror(){
   printf("Erreur de syntaxe à la ligne %d\n",numligne);

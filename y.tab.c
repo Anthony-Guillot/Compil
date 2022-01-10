@@ -73,6 +73,7 @@
   #include "y.tab.h"
   extern int numligne;
   extern char *yytext;
+  arbre *a;
   char *nombuffer;
   char *nombuffer2;
   char *type;
@@ -85,7 +86,7 @@
   int yylex();
   int yyerror();
 
-#line 89 "y.tab.c" /* yacc.c:339  */
+#line 90 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -256,7 +257,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 260 "y.tab.c" /* yacc.c:358  */
+#line 261 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -559,17 +560,17 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    51,    51,    55,    56,    60,    61,    63,    64,    65,
-      66,    69,    69,    72,    72,    73,    73,    76,    79,    80,
-      83,    85,    85,    88,    88,    88,    88,    91,    91,    91,
-      91,    95,    98,    99,   103,   104,   105,   106,   107,   108,
-     109,   110,   117,   118,   121,   121,   126,   127,   130,   131,
-     132,   133,   134,   139,   140,   143,   144,   147,   147,   152,
-     155,   158,   159,   162,   163,   166,   170,   172,   177,   181,
-     186,   187,   189,   190,   191,   194,   195,   196,   199,   200,
-     201,   202,   203,   208,   209,   210,   213,   214,   215,   216,
-     217,   218,   221,   223,   225,   226,   228,   229,   232,   233,
-     234,   237
+       0,    52,    52,    56,    57,    61,    62,    64,    65,    66,
+      67,    70,    70,    73,    73,    74,    74,    77,    80,    81,
+      84,    86,    86,    89,    89,    89,    89,    92,    92,    92,
+      92,    96,    99,   100,   104,   105,   106,   107,   108,   109,
+     110,   111,   118,   119,   122,   122,   127,   128,   131,   132,
+     133,   134,   135,   140,   141,   144,   145,   148,   148,   153,
+     156,   159,   160,   163,   164,   167,   171,   173,   178,   182,
+     187,   188,   190,   191,   192,   195,   196,   197,   200,   201,
+     202,   203,   204,   209,   210,   211,   214,   215,   216,   217,
+     218,   219,   222,   224,   226,   227,   229,   230,   233,   234,
+     235,   238
 };
 #endif
 
@@ -1477,206 +1478,452 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 51 "projet.y" /* yacc.c:1646  */
+#line 52 "projet.y" /* yacc.c:1646  */
     {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());afficherTableLexico();AfficherTD();afficherTR();afficher_region();}
-#line 1483 "y.tab.c" /* yacc.c:1646  */
+#line 1484 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 69 "projet.y" /* yacc.c:1646  */
+#line 70 "projet.y" /* yacc.c:1646  */
     {nombuffer=strdup(yytext);}
-#line 1489 "y.tab.c" /* yacc.c:1646  */
+#line 1490 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 72 "projet.y" /* yacc.c:1646  */
+#line 73 "projet.y" /* yacc.c:1646  */
     {nbChamps=0;tailleStruct=0;decalage=0;}
-#line 1495 "y.tab.c" /* yacc.c:1646  */
+#line 1496 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 72 "projet.y" /* yacc.c:1646  */
+#line 73 "projet.y" /* yacc.c:1646  */
     {ajoutTypeStruct(positionLexeme(nombuffer),tailleStruct);ajoutTRstruct(nbChamps);}
-#line 1501 "y.tab.c" /* yacc.c:1646  */
+#line 1502 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 73 "projet.y" /* yacc.c:1646  */
+#line 74 "projet.y" /* yacc.c:1646  */
     {tailleTab=0;iplus();nbChamps=0;}
-#line 1507 "y.tab.c" /* yacc.c:1646  */
+#line 1508 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 73 "projet.y" /* yacc.c:1646  */
+#line 74 "projet.y" /* yacc.c:1646  */
     {type=strdup(yytext);ajoutTypeTab(positionLexeme(nombuffer),tailleTab*tailleType(positionLexeme(type)));ajoutTRtab(positionLexeme(type),nbChamps);}
-#line 1513 "y.tab.c" /* yacc.c:1646  */
+#line 1514 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 76 "projet.y" /* yacc.c:1646  */
+#line 77 "projet.y" /* yacc.c:1646  */
     {tailleTab=(yyvsp[-1]);}
-#line 1519 "y.tab.c" /* yacc.c:1646  */
+#line 1520 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 79 "projet.y" /* yacc.c:1646  */
+#line 80 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[0]);}
-#line 1525 "y.tab.c" /* yacc.c:1646  */
+#line 1526 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 80 "projet.y" /* yacc.c:1646  */
+#line 81 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[-2])*(yyvsp[0]);}
-#line 1531 "y.tab.c" /* yacc.c:1646  */
+#line 1532 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 83 "projet.y" /* yacc.c:1646  */
+#line 84 "projet.y" /* yacc.c:1646  */
     {(yyval)=((yyvsp[0])-(yyvsp[-2]))+1;nbChamps+=1;TRdimtab((yyvsp[-2]),(yyvsp[0]));}
-#line 1537 "y.tab.c" /* yacc.c:1646  */
+#line 1538 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 85 "projet.y" /* yacc.c:1646  */
+#line 86 "projet.y" /* yacc.c:1646  */
     {nombuffer=strdup(yytext);}
-#line 1543 "y.tab.c" /* yacc.c:1646  */
+#line 1544 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 85 "projet.y" /* yacc.c:1646  */
+#line 86 "projet.y" /* yacc.c:1646  */
     {type=strdup(yytext);ajoutVariable(positionLexeme(nombuffer),positionLexeme(type));}
-#line 1549 "y.tab.c" /* yacc.c:1646  */
+#line 1550 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 88 "projet.y" /* yacc.c:1646  */
+#line 89 "projet.y" /* yacc.c:1646  */
     {nbChamps=0;empiler_region();}
-#line 1555 "y.tab.c" /* yacc.c:1646  */
+#line 1556 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 88 "projet.y" /* yacc.c:1646  */
+#line 89 "projet.y" /* yacc.c:1646  */
     {ajoutProcedure(positionLexeme(strdup(yytext)));}
-#line 1561 "y.tab.c" /* yacc.c:1646  */
+#line 1562 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 88 "projet.y" /* yacc.c:1646  */
+#line 89 "projet.y" /* yacc.c:1646  */
     {ajoutTRproc(nbChamps);}
-#line 1567 "y.tab.c" /* yacc.c:1646  */
+#line 1568 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 88 "projet.y" /* yacc.c:1646  */
+#line 89 "projet.y" /* yacc.c:1646  */
     {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());depiler_region();}
-#line 1573 "y.tab.c" /* yacc.c:1646  */
+#line 1574 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 91 "projet.y" /* yacc.c:1646  */
+#line 92 "projet.y" /* yacc.c:1646  */
     {nbChamps=0;empiler_region();}
-#line 1579 "y.tab.c" /* yacc.c:1646  */
+#line 1580 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 91 "projet.y" /* yacc.c:1646  */
+#line 92 "projet.y" /* yacc.c:1646  */
     {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));}
-#line 1585 "y.tab.c" /* yacc.c:1646  */
+#line 1586 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 91 "projet.y" /* yacc.c:1646  */
+#line 92 "projet.y" /* yacc.c:1646  */
     {type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);}
-#line 1591 "y.tab.c" /* yacc.c:1646  */
+#line 1592 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 91 "projet.y" /* yacc.c:1646  */
+#line 92 "projet.y" /* yacc.c:1646  */
     {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());depiler_region();}
-#line 1597 "y.tab.c" /* yacc.c:1646  */
+#line 1598 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 42:
-#line 117 "projet.y" /* yacc.c:1646  */
-    {tailleStruct+=(yyvsp[0]);}
-#line 1603 "y.tab.c" /* yacc.c:1646  */
+  case 31:
+#line 96 "projet.y" /* yacc.c:1646  */
+    {a=(yyvsp[-1]);}
+#line 1604 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 43:
-#line 118 "projet.y" /* yacc.c:1646  */
-    {tailleStruct+=(yyvsp[0]);}
-#line 1609 "y.tab.c" /* yacc.c:1646  */
+  case 32:
+#line 99 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(CONDITION_BIS,-1,-1),(yyvsp[-1]));}
+#line 1610 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 44:
-#line 121 "projet.y" /* yacc.c:1646  */
-    {nombuffer2=strdup(yytext);}
-#line 1615 "y.tab.c" /* yacc.c:1646  */
+  case 33:
+#line 100 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),inserer_frere((yyvsp[-1]),(yyvsp[-2])));}
+#line 1616 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 45:
-#line 121 "projet.y" /* yacc.c:1646  */
-    {type=strdup(yytext);(yyval)=tailleType(positionLexeme(type));
-ajoutTRchamp(positionLexeme(nombuffer2),positionLexeme(strdup(yytext)),decalage);ajoutChamp(positionLexeme(nombuffer2));decalage+=tailleType(positionLexeme(strdup(yytext)));nbChamps+=1;}
+  case 34:
+#line 104 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(VIDE_BIS,-1,-1);}
 #line 1622 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 57:
-#line 147 "projet.y" /* yacc.c:1646  */
-    {nombuffer=strdup(yytext);}
+  case 35:
+#line 105 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(VIDE_BIS,-1,-1);}
 #line 1628 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 58:
-#line 147 "projet.y" /* yacc.c:1646  */
-    {nbChamps+=1;type=strdup(yytext);ajoutParam(positionLexeme(nombuffer),positionLexeme(type));}
+  case 36:
+#line 106 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(VIDE_BIS,-1,-1);}
 #line 1634 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 72:
-#line 189 "projet.y" /* yacc.c:1646  */
-    {(yyval)=(yyvsp[-2]) + (yyvsp[0]);}
+  case 37:
+#line 107 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(VIDE_BIS,-1,-1);}
 #line 1640 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 73:
-#line 190 "projet.y" /* yacc.c:1646  */
-    {(yyval)=(yyvsp[-2]) - (yyvsp[0]);}
+  case 38:
+#line 108 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(VIDE_BIS,-1,-1);}
 #line 1646 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 75:
-#line 194 "projet.y" /* yacc.c:1646  */
-    {(yyval)=(yyvsp[-2]) * (yyvsp[0]);}
+  case 39:
+#line 109 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(VIDE_BIS,-1,-1);}
 #line 1652 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 76:
-#line 195 "projet.y" /* yacc.c:1646  */
-    {(yyval)=(yyvsp[-2]) / (yyvsp[0]);}
+  case 40:
+#line 110 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(VIDE_BIS,-1,-1);}
 #line 1658 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 79:
-#line 200 "projet.y" /* yacc.c:1646  */
-    {(yyval)=(yyvsp[0]);}
+  case 41:
+#line 111 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(VIDE_BIS,-1,-1);}
 #line 1664 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 80:
-#line 201 "projet.y" /* yacc.c:1646  */
-    {(yyval)=(yyvsp[0]);}
+  case 42:
+#line 118 "projet.y" /* yacc.c:1646  */
+    {tailleStruct+=(yyvsp[0]);}
 #line 1670 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 81:
-#line 202 "projet.y" /* yacc.c:1646  */
-    {(yyval)=(yyvsp[0]);}
+  case 43:
+#line 119 "projet.y" /* yacc.c:1646  */
+    {tailleStruct+=(yyvsp[0]);}
 #line 1676 "y.tab.c" /* yacc.c:1646  */
     break;
 
+  case 44:
+#line 122 "projet.y" /* yacc.c:1646  */
+    {nombuffer2=strdup(yytext);}
+#line 1682 "y.tab.c" /* yacc.c:1646  */
+    break;
 
-#line 1680 "y.tab.c" /* yacc.c:1646  */
+  case 45:
+#line 122 "projet.y" /* yacc.c:1646  */
+    {type=strdup(yytext);(yyval)=tailleType(positionLexeme(type));
+ajoutTRchamp(positionLexeme(nombuffer2),positionLexeme(strdup(yytext)),decalage);ajoutChamp(positionLexeme(nombuffer2));decalage+=tailleType(positionLexeme(strdup(yytext)));nbChamps+=1;}
+#line 1689 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 57:
+#line 148 "projet.y" /* yacc.c:1646  */
+    {nombuffer=strdup(yytext);}
+#line 1695 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 58:
+#line 148 "projet.y" /* yacc.c:1646  */
+    {nbChamps+=1;type=strdup(yytext);ajoutParam(positionLexeme(nombuffer),positionLexeme(type));}
+#line 1701 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 59:
+#line 153 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[-1]);}
+#line 1707 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 60:
+#line 156 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(APPEL_BIS,-1,-1),inserer_frere((yyvsp[-1]),(yyvsp[0])))}
+#line 1713 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 62:
+#line 160 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[-1]);}
+#line 1719 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 63:
+#line 163 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[0]);}
+#line 1725 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 64:
+#line 164 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[-1]);}
+#line 1731 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 65:
+#line 167 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[0]);}
+#line 1737 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 66:
+#line 172 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(CONDITION_BIS,-1,-1),inserer_frere((yyvsp[-3]),(yyvsp[0])));}
+#line 1743 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 67:
+#line 174 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(inserer_frere((yyvsp[-2]),(yyvsp[0])));creer_arbre(CONDITION_BIS,-1,-1),inserer_frere((yyvsp[-5]),(yyvsp[0])));}
+#line 1749 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 68:
+#line 178 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(TQ_BIS,-1,-1),inserer_frere((yyvsp[-3]),(yyvsp[0])));}
+#line 1755 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 69:
+#line 182 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(AFFECT_BIS,-1,-1),inserer_frere((yyvsp[-2]),(yyvsp[0])));}
+#line 1761 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 70:
+#line 187 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[0]);}
+#line 1767 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 71:
+#line 188 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[0]);}
+#line 1773 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 72:
+#line 190 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(PLUS_BIS,-1,-1),inserer_frere((yyvsp[-2]),(yyvsp[0])));}
+#line 1779 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 73:
+#line 191 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(MOINS_BIS,-1,-1),inserer_frere((yyvsp[-2]),(yyvsp[0])));}
+#line 1785 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 74:
+#line 192 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[0]);}
+#line 1791 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 75:
+#line 195 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(MULT_BIS,-1,-1),inserer_frere((yyvsp[-2]),(yyvsp[0])));}
+#line 1797 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 76:
+#line 196 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(DIV_BIS,-1,-1),inserer_frere((yyvsp[-2]),(yyvsp[0])));}
+#line 1803 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 77:
+#line 197 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[0]);}
+#line 1809 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 79:
+#line 201 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(CSTE_INT_BIS,-1,-1);}
+#line 1815 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 80:
+#line 202 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(CSTE_FLOAT_BIS,-1,-1);}
+#line 1821 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 81:
+#line 203 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(CSTE_FLOAT_BIS,-1,-1);}
+#line 1827 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 82:
+#line 204 "projet.y" /* yacc.c:1646  */
+    {(yyval)=(yyvsp[0]);}
+#line 1833 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 83:
+#line 209 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils((yyvsp[-1]),inserer_frere((yyvsp[-2]),(yyvsp[0])));}
+#line 1839 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 84:
+#line 210 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(AND_BIS,-1,-1),inserer_frere((yyvsp[-2]),(yyvsp[0])));}
+#line 1845 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 85:
+#line 211 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(OR_BIS,-1,-1),inserer_frere((yyvsp[-2]),(yyvsp[0])));}
+#line 1851 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 86:
+#line 214 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(EGALE_BIS,-1,-1);}
+#line 1857 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 87:
+#line 215 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(DIFF_BIS,-1,-1);}
+#line 1863 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 88:
+#line 216 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(SUP_BIS,-1,-1);}
+#line 1869 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 89:
+#line 217 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(SUP_EGALE_BIS,-1,-1);}
+#line 1875 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 90:
+#line 218 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(INF_BIS,-1,-1);}
+#line 1881 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 91:
+#line 219 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(INF_EGALE_BIS,-1,-1);}
+#line 1887 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 92:
+#line 222 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(CSTE_INT_BIS,-1,-1);}
+#line 1893 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 93:
+#line 224 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(CSTE_INT_BIS,-1,-1);}
+#line 1899 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 98:
+#line 233 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre(IDF_BIS,chercheVar(positionLexeme(strdup(yytext))),positionLexeme(strdup(yytext)));}
+#line 1905 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 99:
+#line 234 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(TAB_BIS,-1,-1),(yyvsp[0]));}
+#line 1911 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 100:
+#line 235 "projet.y" /* yacc.c:1646  */
+    {(yyval)=inserer_fils(creer_arbre(POINT_BIS,-1,-1),inserer_frere((yyvsp[-2]),(yyvsp[0])));}
+#line 1917 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 101:
+#line 238 "projet.y" /* yacc.c:1646  */
+    {(yyval)=creer_arbre("TAB_BIS",-1,-1);}
+#line 1923 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+
+#line 1927 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

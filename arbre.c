@@ -6,26 +6,26 @@ void afficher_arbre(arbre a,int tab){
     char *chaine,* c="  ";
     switch (a->racine_type)
     {
-    case STR:
+    case STR_BIS:
         chaine="STR";
         break;
-    case TAB:
+    case TAB_BIS:
         chaine="TAB";
         break;
-    case VAR:
+    case VAR_BIS:
         chaine="VAR";
         /* reste à ajouter les numéro*/
         break;
-    case PARAM:
+    case PARAM_BIS:
         chaine="PARAM";
         break;
-    case PROC:
+    case PROC_BIS:
         chaine="PROC";
         break;
-    case FUN:
+    case FUN_BIS:
         chaine="FUN";
         break;
-    case AFFECT:
+    case AFFECT_BIS:
         chaine="AFFECT";
         break;
     case OP_BIN_BIS:
