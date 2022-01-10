@@ -2,9 +2,22 @@
 int region=0;
 pile p;
 
+int deuxiemeValeur(){
+  return p.valeurs[1];
+}
+
+void setTailleBis(int taille){
+  p.tailleBis[0]+=taille;
+}
+
+int getTailleBis(){
+  return p.tailleBis[0];
+}
+
 void incr_num_region() {
   region ++;
 }
+
 int positionDansPile(int region){
   int n=0;
   for(n=0;n<p.taille;n++){
@@ -22,17 +35,26 @@ int nispile(){
 
 void empiler_region(){
   incr_num_region();
-  for(int n=p.taille;n>=0;n--){
+  for(int n=p.taille;n>0;n--){
     p.valeurs[n]=p.valeurs[n-1];
+    p.tailleBis[n]=p.tailleBis[n-1];
+  }
+  p.taille +=1;
+  if(p.taille==1){
+    p.tailleBis[0]=0;
+  }
+  else{
+    p.tailleBis[0]=(p.taille-1)+1;
   }
   p.valeurs[0]= region;
-  p.taille ++;
 }
 
 void depiler_region(){
   for(int n=0;n<p.taille;n++){
+    p.tailleBis[n]=p.tailleBis[n+1];
     p.valeurs[n]=p.valeurs[n+1];
   }
+  p.taille-=1;
 }
 
 int sommet_pile(){
@@ -53,6 +75,7 @@ int estdanspile(int region){
 
 void initpileR(){
  p.taille=1;
+ p.tailleBis[0]=0;
  p.valeurs[0]=0;
 }
 

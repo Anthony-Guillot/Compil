@@ -11,10 +11,11 @@
 typedef struct region
 {
     int taille; /* taille de la region */
-    int nis; /* numéro d'inbrication static */
+    int nis; /* niveau d'inbrication static */
     arbre repre; /* arbre de representation de la region */
 }region;
-
-region tab_region[MAX_REGION];
+void init_tab_region();
+void inserer_region(int taille,int nis,arbre repre,int i);
+void afficher_region();
 
 #endif

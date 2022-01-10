@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "tableRepre.h"
 
+int deuxiemeValeur();
+
 int getRegion();
 
 void setRegion(int plus);
@@ -15,6 +17,8 @@ int tailleType(int lexType);
 int chercheType(int lexeme);
 
 void ajoutTypeStruct(int lexAssocie,int taille);
+
+void ajoutChamp(int lexAssocie);
 
 void ajoutTypeTab(int lexAssocie,int taille);
 

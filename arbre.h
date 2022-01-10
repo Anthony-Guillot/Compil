@@ -13,11 +13,11 @@
 #define PROC 5
 #define FUN 6
 #define AFFECT 7
-#define PLUS 8
-#define MOINS 9
-#define MULT 10
-#define DIV 11
-#define OP_BIN 12
+#define PLUS_BIS 8
+#define MOINS_BIS 9
+#define MULT_BIS 10
+#define DIV_BIS 11
+#define OP_BIN_BIS 12
 
 typedef struct noeud
 {

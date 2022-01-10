@@ -6,7 +6,12 @@
 typedef struct pile{
  int taille;
  int valeurs[TAILLE_PILE];
+ int tailleBis[TAILLE_PILE];
 }pile;
+
+void setTailleBis(int taille);
+
+int getTailleBis();
 
 int positionDansPile(int region);
 void incr_num_region();

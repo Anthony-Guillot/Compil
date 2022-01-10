@@ -1,8 +1,8 @@
 compil:
 	yacc -d -v projet.y
 	lex projet.l
-	gcc -c lex.yy.c tableLexico.c tableRepre.c pregion.c tableDecla.c arbre.c
-	gcc -o projet y.tab.c tableLexico.o arbre.o tableRepre.o pregion.o tableDecla.o lex.yy.o -ll -ly
+	gcc -c lex.yy.c tableLexico.c tableRepre.c tableRegion.c pregion.c tableDecla.c arbre.c
+	gcc -o projet y.tab.c tableLexico.o arbre.o tableRepre.o tableRegion.o pregion.o tableDecla.o lex.yy.o -ll -ly
 	
 arbre :
 	gcc -Wall arbre.c -c
@@ -14,6 +14,7 @@ clean:
 	rm y.tab.h
 	rm lex.yy.o
 	rm lex.yy.c
+	rm tableRegion.o
 	rm tableLexico.o
 	rm tableDecla.o
 	rm pregio.o

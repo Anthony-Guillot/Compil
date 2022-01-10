@@ -68,6 +68,7 @@
   #include "tableLexico.h"
   #include "tableDecla.h"
   #include "tableRepre.h"
+  #include "tableRegion.h"
   #include "pregion.h"
   #include "y.tab.h"
   extern int numligne;
@@ -84,7 +85,7 @@
   int yylex();
   int yyerror();
 
-#line 88 "y.tab.c" /* yacc.c:339  */
+#line 89 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -255,7 +256,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 259 "y.tab.c" /* yacc.c:358  */
+#line 260 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -558,17 +559,17 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    50,    50,    54,    55,    59,    60,    62,    63,    64,
-      65,    68,    68,    71,    71,    72,    72,    75,    78,    79,
-      82,    84,    84,    87,    87,    87,    87,    90,    90,    90,
-      90,    94,    97,    98,   102,   103,   104,   105,   106,   107,
-     108,   109,   116,   117,   120,   120,   125,   126,   129,   130,
-     131,   132,   133,   138,   139,   142,   143,   146,   146,   151,
-     154,   157,   158,   161,   162,   165,   169,   171,   176,   180,
-     185,   186,   188,   189,   190,   193,   194,   195,   198,   199,
-     200,   201,   202,   207,   208,   209,   212,   213,   214,   215,
-     216,   217,   220,   222,   224,   225,   227,   228,   231,   232,
-     233,   236
+       0,    51,    51,    55,    56,    60,    61,    63,    64,    65,
+      66,    69,    69,    72,    72,    73,    73,    76,    79,    80,
+      83,    85,    85,    88,    88,    88,    88,    91,    91,    91,
+      91,    95,    98,    99,   103,   104,   105,   106,   107,   108,
+     109,   110,   117,   118,   121,   121,   126,   127,   130,   131,
+     132,   133,   134,   139,   140,   143,   144,   147,   147,   152,
+     155,   158,   159,   162,   163,   166,   170,   172,   177,   181,
+     186,   187,   189,   190,   191,   194,   195,   196,   199,   200,
+     201,   202,   203,   208,   209,   210,   213,   214,   215,   216,
+     217,   218,   221,   223,   225,   226,   228,   229,   232,   233,
+     234,   237
 };
 #endif
 
@@ -1476,206 +1477,206 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 50 "projet.y" /* yacc.c:1646  */
-    {afficherTableLexico();AfficherTD();afficherTR();}
-#line 1482 "y.tab.c" /* yacc.c:1646  */
+#line 51 "projet.y" /* yacc.c:1646  */
+    {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());afficherTableLexico();AfficherTD();afficherTR();afficher_region();}
+#line 1483 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 68 "projet.y" /* yacc.c:1646  */
+#line 69 "projet.y" /* yacc.c:1646  */
     {nombuffer=strdup(yytext);}
-#line 1488 "y.tab.c" /* yacc.c:1646  */
+#line 1489 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 71 "projet.y" /* yacc.c:1646  */
+#line 72 "projet.y" /* yacc.c:1646  */
     {nbChamps=0;tailleStruct=0;decalage=0;}
-#line 1494 "y.tab.c" /* yacc.c:1646  */
+#line 1495 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 71 "projet.y" /* yacc.c:1646  */
+#line 72 "projet.y" /* yacc.c:1646  */
     {ajoutTypeStruct(positionLexeme(nombuffer),tailleStruct);ajoutTRstruct(nbChamps);}
-#line 1500 "y.tab.c" /* yacc.c:1646  */
+#line 1501 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 72 "projet.y" /* yacc.c:1646  */
+#line 73 "projet.y" /* yacc.c:1646  */
     {tailleTab=0;iplus();nbChamps=0;}
-#line 1506 "y.tab.c" /* yacc.c:1646  */
+#line 1507 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 72 "projet.y" /* yacc.c:1646  */
+#line 73 "projet.y" /* yacc.c:1646  */
     {type=strdup(yytext);ajoutTypeTab(positionLexeme(nombuffer),tailleTab*tailleType(positionLexeme(type)));ajoutTRtab(positionLexeme(type),nbChamps);}
-#line 1512 "y.tab.c" /* yacc.c:1646  */
+#line 1513 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 75 "projet.y" /* yacc.c:1646  */
+#line 76 "projet.y" /* yacc.c:1646  */
     {tailleTab=(yyvsp[-1]);}
-#line 1518 "y.tab.c" /* yacc.c:1646  */
+#line 1519 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 78 "projet.y" /* yacc.c:1646  */
+#line 79 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[0]);}
-#line 1524 "y.tab.c" /* yacc.c:1646  */
+#line 1525 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 79 "projet.y" /* yacc.c:1646  */
+#line 80 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[-2])*(yyvsp[0]);}
-#line 1530 "y.tab.c" /* yacc.c:1646  */
+#line 1531 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 82 "projet.y" /* yacc.c:1646  */
+#line 83 "projet.y" /* yacc.c:1646  */
     {(yyval)=((yyvsp[0])-(yyvsp[-2]))+1;nbChamps+=1;TRdimtab((yyvsp[-2]),(yyvsp[0]));}
-#line 1536 "y.tab.c" /* yacc.c:1646  */
+#line 1537 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 84 "projet.y" /* yacc.c:1646  */
+#line 85 "projet.y" /* yacc.c:1646  */
     {nombuffer=strdup(yytext);}
-#line 1542 "y.tab.c" /* yacc.c:1646  */
+#line 1543 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 84 "projet.y" /* yacc.c:1646  */
+#line 85 "projet.y" /* yacc.c:1646  */
     {type=strdup(yytext);ajoutVariable(positionLexeme(nombuffer),positionLexeme(type));}
-#line 1548 "y.tab.c" /* yacc.c:1646  */
+#line 1549 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 87 "projet.y" /* yacc.c:1646  */
+#line 88 "projet.y" /* yacc.c:1646  */
     {nbChamps=0;empiler_region();}
-#line 1554 "y.tab.c" /* yacc.c:1646  */
+#line 1555 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 87 "projet.y" /* yacc.c:1646  */
+#line 88 "projet.y" /* yacc.c:1646  */
     {ajoutProcedure(positionLexeme(strdup(yytext)));}
-#line 1560 "y.tab.c" /* yacc.c:1646  */
+#line 1561 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 87 "projet.y" /* yacc.c:1646  */
+#line 88 "projet.y" /* yacc.c:1646  */
     {ajoutTRproc(nbChamps);}
-#line 1566 "y.tab.c" /* yacc.c:1646  */
+#line 1567 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 87 "projet.y" /* yacc.c:1646  */
-    {depiler_region();}
-#line 1572 "y.tab.c" /* yacc.c:1646  */
+#line 88 "projet.y" /* yacc.c:1646  */
+    {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());depiler_region();}
+#line 1573 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 90 "projet.y" /* yacc.c:1646  */
+#line 91 "projet.y" /* yacc.c:1646  */
     {nbChamps=0;empiler_region();}
-#line 1578 "y.tab.c" /* yacc.c:1646  */
+#line 1579 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 90 "projet.y" /* yacc.c:1646  */
+#line 91 "projet.y" /* yacc.c:1646  */
     {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));}
-#line 1584 "y.tab.c" /* yacc.c:1646  */
+#line 1585 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 90 "projet.y" /* yacc.c:1646  */
+#line 91 "projet.y" /* yacc.c:1646  */
     {type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);}
-#line 1590 "y.tab.c" /* yacc.c:1646  */
+#line 1591 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 90 "projet.y" /* yacc.c:1646  */
-    {depiler_region();;}
-#line 1596 "y.tab.c" /* yacc.c:1646  */
+#line 91 "projet.y" /* yacc.c:1646  */
+    {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());depiler_region();}
+#line 1597 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 116 "projet.y" /* yacc.c:1646  */
+#line 117 "projet.y" /* yacc.c:1646  */
     {tailleStruct+=(yyvsp[0]);}
-#line 1602 "y.tab.c" /* yacc.c:1646  */
+#line 1603 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 117 "projet.y" /* yacc.c:1646  */
+#line 118 "projet.y" /* yacc.c:1646  */
     {tailleStruct+=(yyvsp[0]);}
-#line 1608 "y.tab.c" /* yacc.c:1646  */
+#line 1609 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 120 "projet.y" /* yacc.c:1646  */
+#line 121 "projet.y" /* yacc.c:1646  */
     {nombuffer2=strdup(yytext);}
-#line 1614 "y.tab.c" /* yacc.c:1646  */
+#line 1615 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 120 "projet.y" /* yacc.c:1646  */
+#line 121 "projet.y" /* yacc.c:1646  */
     {type=strdup(yytext);(yyval)=tailleType(positionLexeme(type));
-ajoutTRchamp(positionLexeme(nombuffer2),positionLexeme(strdup(yytext)),decalage);decalage+=tailleType(positionLexeme(strdup(yytext)));nbChamps+=1;}
-#line 1621 "y.tab.c" /* yacc.c:1646  */
+ajoutTRchamp(positionLexeme(nombuffer2),positionLexeme(strdup(yytext)),decalage);ajoutChamp(positionLexeme(nombuffer2));decalage+=tailleType(positionLexeme(strdup(yytext)));nbChamps+=1;}
+#line 1622 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 146 "projet.y" /* yacc.c:1646  */
+#line 147 "projet.y" /* yacc.c:1646  */
     {nombuffer=strdup(yytext);}
-#line 1627 "y.tab.c" /* yacc.c:1646  */
+#line 1628 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 146 "projet.y" /* yacc.c:1646  */
+#line 147 "projet.y" /* yacc.c:1646  */
     {nbChamps+=1;type=strdup(yytext);ajoutParam(positionLexeme(nombuffer),positionLexeme(type));}
-#line 1633 "y.tab.c" /* yacc.c:1646  */
+#line 1634 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 188 "projet.y" /* yacc.c:1646  */
+#line 189 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[-2]) + (yyvsp[0]);}
-#line 1639 "y.tab.c" /* yacc.c:1646  */
+#line 1640 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 189 "projet.y" /* yacc.c:1646  */
+#line 190 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[-2]) - (yyvsp[0]);}
-#line 1645 "y.tab.c" /* yacc.c:1646  */
+#line 1646 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 193 "projet.y" /* yacc.c:1646  */
+#line 194 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[-2]) * (yyvsp[0]);}
-#line 1651 "y.tab.c" /* yacc.c:1646  */
+#line 1652 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 194 "projet.y" /* yacc.c:1646  */
+#line 195 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[-2]) / (yyvsp[0]);}
-#line 1657 "y.tab.c" /* yacc.c:1646  */
+#line 1658 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 199 "projet.y" /* yacc.c:1646  */
+#line 200 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[0]);}
-#line 1663 "y.tab.c" /* yacc.c:1646  */
+#line 1664 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 200 "projet.y" /* yacc.c:1646  */
+#line 201 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[0]);}
-#line 1669 "y.tab.c" /* yacc.c:1646  */
+#line 1670 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 201 "projet.y" /* yacc.c:1646  */
+#line 202 "projet.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[0]);}
-#line 1675 "y.tab.c" /* yacc.c:1646  */
+#line 1676 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1679 "y.tab.c" /* yacc.c:1646  */
+#line 1680 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1903,13 +1904,14 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 238 "projet.y" /* yacc.c:1906  */
+#line 239 "projet.y" /* yacc.c:1906  */
 
 int yyerror(){
   printf("Erreur de syntaxe à la ligne %d\n",numligne);
  }
 
 int main(){
+  init_tab_region();
   initpileR();
   initrepre();
   init();

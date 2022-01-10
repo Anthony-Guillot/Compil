@@ -1,4 +1,5 @@
 #include"tableRegion.h"
+region tab_region[MAX_REGION];
 
 void init_tab_region(){
     int i=0;
@@ -9,11 +10,7 @@ void init_tab_region(){
     }
 }
 
-void inserer_region(int taille,int nis,arbre repre){
-    int i=0;
-    while(i<MAX_REGION && tab_region[i].taille!=-1){
-        i++;
-    }
+void inserer_region(int taille,int nis,arbre repre,int i){
     tab_region[i].taille=taille;
     tab_region[i].nis=nis;
     tab_region[i].repre=repre;
@@ -28,7 +25,7 @@ void afficher_region(){
     }
     fprintf(stderr,"\n");
 }
-
+/*
 int main(){
     
     init_tab_region();
@@ -43,3 +40,4 @@ int main(){
     inserer_region(15,13,NULL);
     afficher_region();
 }
+*/

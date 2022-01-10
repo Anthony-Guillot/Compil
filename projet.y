@@ -3,6 +3,7 @@
   #include "tableLexico.h"
   #include "tableDecla.h"
   #include "tableRepre.h"
+  #include "tableRegion.h"
   #include "pregion.h"
   #include "y.tab.h"
   extern int numligne;
@@ -47,7 +48,7 @@
 %token ERROR
 %%
 
-programme:PROG corps {afficherTableLexico();AfficherTD();afficherTR();}
+programme:PROG corps {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());afficherTableLexico();AfficherTD();afficherTR();afficher_region();}
 ;
 
   /*--- Strucutures globales d'un programme d'abord declaration puis instruction ---*/
@@ -84,10 +85,10 @@ une_dimension:expression POINT_POINT expression {$$=($3-$1)+1;nbChamps+=1;TRdimt
 declaration_variable:VARIABLE IDF {nombuffer=strdup(yytext);} DEUX_POINTS nom_type {type=strdup(yytext);ajoutVariable(positionLexeme(nombuffer),positionLexeme(type));}
 ;
 
-declaration_procedure:PROCEDURE {nbChamps=0;empiler_region();} IDF {ajoutProcedure(positionLexeme(strdup(yytext)));} liste_parametres {ajoutTRproc(nbChamps);} corps {depiler_region();}
+declaration_procedure:PROCEDURE {nbChamps=0;empiler_region();} IDF {ajoutProcedure(positionLexeme(strdup(yytext)));} liste_parametres {ajoutTRproc(nbChamps);} corps {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());depiler_region();}
 ;
 
-declaration_fonction:FONCTION {nbChamps=0;empiler_region();} IDF {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));} liste_parametres RETOURNE type_simple{type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);} corps {depiler_region();;}
+declaration_fonction:FONCTION {nbChamps=0;empiler_region();} IDF {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));} liste_parametres RETOURNE type_simple{type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);} corps {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());depiler_region();}
 ;
 /*-----------------------------------------------------------------------*/
   /*--- Strucutures des listes d'instructions---*/
@@ -118,7 +119,7 @@ liste_champs:un_champ {tailleStruct+=$1;}
 ;
 
 un_champ:IDF {nombuffer2=strdup(yytext);}DEUX_POINTS nom_type {type=strdup(yytext);$$=tailleType(positionLexeme(type));
-ajoutTRchamp(positionLexeme(nombuffer2),positionLexeme(strdup(yytext)),decalage);decalage+=tailleType(positionLexeme(strdup(yytext)));nbChamps+=1;}
+ajoutTRchamp(positionLexeme(nombuffer2),positionLexeme(strdup(yytext)),decalage);ajoutChamp(positionLexeme(nombuffer2));decalage+=tailleType(positionLexeme(strdup(yytext)));nbChamps+=1;}
 ;
 
 
@@ -241,6 +242,7 @@ int yyerror(){
  }
 
 int main(){
+  init_tab_region();
   initpileR();
   initrepre();
   init();

@@ -53,6 +53,11 @@ int tailleType(int lexType){
   return tabledecla[4][chercheType(lexType)];
 }
 
+void ajoutChamp(int lexAssocie){
+    lexAssocie=verifRegion(lexAssocie,-2);
+    tabledecla[0][lexAssocie]=-2;
+}
+
 int chercheType(int lexeme){
   int i,dernier=-1,min=nispile();
   if(estdanspile(tabledecla[2][lexeme]) &&(tabledecla[0][lexeme]==1 || tabledecla[0][lexeme]==2 || tabledecla[0][lexeme]==0)){
@@ -95,6 +100,8 @@ void ajoutVariable(int lexAssocie,int typeAssocie){
   tabledecla[0][lexAssocie]=3;
   tabledecla[2][lexAssocie]=sommet_pile();
   tabledecla[3][lexAssocie]=chercheType(typeAssocie);
+  tabledecla[4][lexAssocie]=getTailleBis();
+  setTailleBis(tailleType(chercheType(typeAssocie)));
 }
 
 void ajoutParam(int lexAssocie,int typeAssocie){
@@ -102,12 +109,14 @@ void ajoutParam(int lexAssocie,int typeAssocie){
   tabledecla[0][lexAssocie]=4;
   tabledecla[2][lexAssocie]=sommet_pile();
   tabledecla[3][lexAssocie]=chercheType(typeAssocie);
+  tabledecla[4][lexAssocie]=getTailleBis();
+  setTailleBis(tailleType(chercheType(typeAssocie)));
 }
 
 void ajoutFonction(int lexAssocie){
   lexAssocie=verifRegion(lexAssocie,6);
   tabledecla[0][lexAssocie]=6;
-  tabledecla[2][lexAssocie]=sommet_pile()-1;
+  tabledecla[2][lexAssocie]=deuxiemeValeur();
   tabledecla[3][lexAssocie]=getibase();
   tabledecla[4][lexAssocie]=sommet_pile();
 }
@@ -115,7 +124,7 @@ void ajoutFonction(int lexAssocie){
 void ajoutProcedure(int lexAssocie){
   lexAssocie=verifRegion(lexAssocie,5);
   tabledecla[0][lexAssocie]=5;
-  tabledecla[2][lexAssocie]=sommet_pile()-1;
+  tabledecla[2][lexAssocie]=deuxiemeValeur();
   tabledecla[3][lexAssocie]=getibase();
   tabledecla[4][lexAssocie]=sommet_pile();
 }
@@ -156,13 +165,77 @@ int ExecClass(int desc){
 
 void AfficherTD(){
   int i;
-  printf("Table primaire 0 à 500\n");
-  for (i=0; i<500; i++){
-    printf("\t%d \t%d \t%d \t%d \t%d \t%d \n", i, tabledecla[0][i], tabledecla[1][i], tabledecla[2][i], tabledecla[3][i], tabledecla[4][i]);
+  char *chaine;
+  printf("-------------------------------\n");
+  printf("|         Table primaire      |\n");
+  printf("-------------------------------\n");
+  for (i=0;tabledecla[0][i]!=-1; i++){
+    chaine="";
+    switch (tabledecla[0][i])
+    {
+    case 0:
+      chaine="TYPE_B";
+      break;
+    case 1:
+      chaine="TYPE_S";
+      break;
+    case 2:
+      chaine="TYPE_T";
+      break;
+    case 3:
+      chaine="VAR";
+      break;
+    case 4:
+      chaine="PARAM";
+      break;
+    case 5:
+      chaine="PROC";
+      break;
+    case 6:
+      chaine="FONC";
+      break;
+    default:
+      chaine="-1";
+      break;
+    }
+    printf("|%-4d|%-8s|%-3d|%-3d|%-3d|%-3d|\n", i,chaine, tabledecla[1][i], tabledecla[2][i], tabledecla[3][i], tabledecla[4][i]);
   }
-
-   printf("\n\nTable débordement\n");
-   for(i=500; i<debordement_libre; i++){
-    printf("     %d        %d          %d          %d           %d         %d\n", i, tabledecla[0][i], tabledecla[1][i], tabledecla[2][i], tabledecla[3][i], tabledecla[4][i]);
+  
+  printf("-------------------------------\n");
+  printf("\n");
+   printf("-------------------------------\n");
+   printf("|       Table débordement     |\n");
+   printf("-------------------------------\n");
+   for(i=500;tabledecla[0][i]!=-1; i++){
+     chaine="";
+    switch (tabledecla[0][i])
+    {
+    case 0:
+      chaine="TYPE_B";
+      break;
+    case 1:
+      chaine="TYPE_S";
+      break;
+    case 2:
+      chaine="TYPE_T";
+      break;
+    case 3:
+      chaine="VAR";
+      break;
+    case 4:
+      chaine="PARAM";
+      break;
+    case 5:
+      chaine="PROC";
+      break;
+    case 6:
+      chaine="FONC";
+      break;
+    default:
+      chaine="-1";
+      break;
+    }
+    printf("|%-4d|%-8s|%-3d|%-3d|%-3d|%-3d|\n", i, chaine, tabledecla[1][i], tabledecla[2][i], tabledecla[3][i], tabledecla[4][i]);
    }
+   printf("-------------------------------\n");
 }

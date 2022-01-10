@@ -28,7 +28,7 @@ void afficher_arbre(arbre a,int tab){
     case AFFECT:
         chaine="AFFECT";
         break;
-    case OP_BIN:
+    case OP_BIN_BIS:
         chaine="OP_BIN";
         break;
     default:
