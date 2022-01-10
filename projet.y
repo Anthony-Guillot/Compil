@@ -1,7 +1,20 @@
 %{
   #include <stdio.h>
+  #include "tableLexico.h"
+  #include "tableDecla.h"
+  #include "tableRepre.h"
+  #include "y.tab.h"
   extern int numligne;
   extern char *yytext;
+  char *nombuffer;
+  char *nombuffer2;
+  char *type;
+  int decalage=0;
+  int tailleTab=0;
+  int tailleStruct=0;
+  int dimensionDebut=0;
+  int dimensionFin=0;
+  int nbChamps=0;
   int yylex();
   int yyerror();
 %}
@@ -33,7 +46,7 @@
 %token ERROR
 %%
 
-programme:PROG corps
+programme:PROG corps {afficherTableLexico();AfficherTD();afficherTR();}
 ;
 
   /*--- Strucutures globales d'un programme d'abord declaration puis instruction ---*/
@@ -51,29 +64,29 @@ declaration:declaration_type
 |declaration_fonction
 ;
 
-declaration_type:TYPE IDF DEUX_POINTS suite_declaration_type
+declaration_type:TYPE IDF {nombuffer=strdup(yytext);} DEUX_POINTS suite_declaration_type
 ;
 
-suite_declaration_type:STRUCT liste_champs FSTRUCT
-|TABLEAU dimension DE nom_type
+suite_declaration_type:{nbChamps=0;tailleStruct=0;decalage=0;}STRUCT liste_champs FSTRUCT {ajoutTypeStruct(positionLexeme(nombuffer),tailleStruct);ajoutTRstruct(nbChamps);}
+|{tailleTab=0;iplus();nbChamps=0;}TABLEAU dimension DE nom_type {type=strdup(yytext);ajoutTypeTab(positionLexeme(nombuffer),tailleTab*tailleType(positionLexeme(type)));ajoutTRtab(positionLexeme(type),nbChamps);}
 ;
 
-dimension:CROCHET_OUVRANT liste_dimensions CROCHET_FERMANT
+dimension:CROCHET_OUVRANT liste_dimensions CROCHET_FERMANT {tailleTab=$2;}
 ;
 
-liste_dimensions:une_dimension
-|liste_dimensions VIRGULE une_dimension
+liste_dimensions:une_dimension {$$=$1;}
+|liste_dimensions VIRGULE une_dimension {$$=$1*$3;}
 ;
 
-une_dimension:expression POINT_POINT expression
+une_dimension:expression POINT_POINT expression {$$=($3-$1)+1;nbChamps+=1;TRdimtab($1,$3);}
 ;
-declaration_variable:VARIABLE IDF DEUX_POINTS nom_type
-;
-
-declaration_procedure:PROCEDURE IDF liste_parametres corps
+declaration_variable:VARIABLE IDF {nombuffer=strdup(yytext);} DEUX_POINTS nom_type {type=strdup(yytext);ajoutVariable(positionLexeme(nombuffer),positionLexeme(type));}
 ;
 
-declaration_fonction:FONCTION IDF liste_parametres RETOURNE type_simple corps
+declaration_procedure:PROCEDURE {nbChamps=0;setRegion(1);} IDF {ajoutProcedure(positionLexeme(strdup(yytext)));} liste_parametres {ajoutTRproc(nbChamps);} corps {setRegion(0);}
+;
+
+declaration_fonction:FONCTION {nbChamps=0;setRegion(1);} IDF {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));} liste_parametres RETOURNE type_simple{type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);} corps {setRegion(0);}
 ;
 /*-----------------------------------------------------------------------*/
   /*--- Strucutures des listes d'instructions---*/
@@ -99,11 +112,12 @@ instruction:affectation
 
 
 
-liste_champs:un_champ
-|liste_champs POINT_VIRGULE un_champ
+liste_champs:un_champ {tailleStruct+=$1;}
+|liste_champs POINT_VIRGULE un_champ {tailleStruct+=$3;}
 ;
 
-un_champ:IDF DEUX_POINTS nom_type
+un_champ:IDF {nombuffer2=strdup(yytext);}DEUX_POINTS nom_type {type=strdup(yytext);$$=tailleType(positionLexeme(type));
+ajoutTRchamp(positionLexeme(nombuffer2),positionLexeme(strdup(yytext)),decalage);decalage+=tailleType(positionLexeme(strdup(yytext)));nbChamps+=1;}
 ;
 
 
@@ -128,7 +142,7 @@ liste_param:un_param
 |liste_param POINT_VIRGULE un_param
 ;
 
-un_param:IDF DEUX_POINTS type_simple
+un_param:IDF {nombuffer=strdup(yytext);}DEUX_POINTS type_simple {nbChamps+=1;type=strdup(yytext);ajoutParam(positionLexeme(nombuffer),positionLexeme(type));}
 ;
 
   /*--- Strucuture d'un return ---*/
@@ -170,20 +184,20 @@ affectation:variable OPAFF expression
 expression:expression_arithmetique
 |expression_booleenne
 ;
-expression_arithmetique:expression_arithmetique PLUS expression_arithmetique2
-|expression_arithmetique MOINS expression_arithmetique2
+expression_arithmetique:expression_arithmetique PLUS expression_arithmetique2 {$$=$1 + $3;}
+|expression_arithmetique MOINS expression_arithmetique2 {$$=$1 - $3;}
 |expression_arithmetique2
 ;
 
-expression_arithmetique2:expression_arithmetique2 MULT expression_arithmetique3
-|expression_arithmetique2 DIV expression_arithmetique3
+expression_arithmetique2:expression_arithmetique2 MULT expression_arithmetique3 {$$=$1 * $3;}
+|expression_arithmetique2 DIV expression_arithmetique3 {$$=$1 / $3;}
 |expression_arithmetique3
 ;
 
 expression_arithmetique3:PARENTHESE_OUVRANTE expression_arithmetique PARENTHESE_FERMANTE
-|CSTE_ENTIERE
-|CSTE_REEL
-|CSTE_CHAINE
+|CSTE_ENTIERE {$$=$1;}
+|CSTE_REEL {$$=$1;}
+|CSTE_CHAINE {$$=$1;}
 |variable
 ;
 
@@ -226,6 +240,8 @@ int yyerror(){
  }
 
 int main(){
-  
+  initrepre();
+  init();
+  initDecla();
   return yyparse();
 }

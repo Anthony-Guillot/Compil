@@ -1,9 +1,11 @@
 /*--- Inclusion des fichiers ---*/
 %{
-#include "y.tab.h"
-#include "tableLexico.h"
-#define ERREUR -99
-int numligne=1; 
+    #include <stdio.h>
+    #include <string.h>
+    #include "y.tab.h"
+  #include "tableLexico.h"
+    #define ERREUR -99
+    int numligne=1; 
 %}
 %%
 \/\*([^*]|\*+[^*/])*\*+\/ {;}
@@ -42,11 +44,11 @@ struct {return STRUCT;}
 endstruct {return FSTRUCT;}
 
     /*--- Déclaration des types simples ---*/
-int {return ENTIER;}
-float {return REEL;}
-char {return CARACTERE;}
-string {return CHAINE;}
-bool {return BOOLEEN;}
+int {(strdup(yytext));return ENTIER;}
+float {(strdup(yytext));return REEL;}
+char {(strdup(yytext));return CARACTERE;}
+string {(strdup(yytext));return CHAINE;}
+bool {(strdup(yytext));return BOOLEEN;}
 
     /*--- Déclaration de la grammaire ---*/
 \[ {return CROCHET_OUVRANT;}
@@ -55,8 +57,8 @@ bool {return BOOLEEN;}
 \) {return PARENTHESE_FERMANTE;}
 \{ {return ACCOLADE_OUVRANT;}
 \} {return ACCOLADE_FERMANTE;}
-0|([1-9][0-9]*) {return CSTE_ENTIERE;}
-0|([1-9][0-9]*)\.([0-9]*[1-9])|0 {return CSTE_REEL;}
+0|([1-9][0-9]*) {yylval=atoi(yytext);return CSTE_ENTIERE;}
+0|([1-9][0-9]*)\.([0-9]*[1-9])|0 {yylval=atof(yytext);return CSTE_REEL;}
 \"[a-zA-Z]\" {return CSTE_CHAR;}
 \".*\" {return CSTE_CHAINE;}
 inst_void {return VIDE;}
@@ -78,7 +80,7 @@ inst_void {return VIDE;}
 \> {return SUP;}
 
     /*---Gestion des idf---*/
-[a-zA-Z][a-zA-Z0-9_]* {return IDF;} 
+[a-zA-Z][a-zA-Z0-9_]* {inserer(strdup(yytext));return IDF;} 
 
 
     /*---gestion de la ligne d'erreur---*/
