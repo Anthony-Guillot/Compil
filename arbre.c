@@ -3,7 +3,7 @@
 /* affiche dans le terminal un arbre (non fini) */
 void afficher_arbre(arbre a,int tab){
     int i=0;
-    char *chaine,c=' ';
+    char *chaine,* c="  ";
     switch (a->racine_type)
     {
     case STR_BIS :
@@ -115,7 +115,7 @@ case POINT_BIS :
         tab--;
         fprintf(stderr,"\n");
         for(i=0;i<tab;i++){
-            fprintf(stderr,"%-10c",c);
+            fprintf(stderr,"%10s",c);
         }
         afficher_arbre(a->fils,tab);
     }
