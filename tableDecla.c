@@ -4,6 +4,7 @@
 /*Co-author CONDOM Mahieu*/
 int tabledecla[5][1000];
 int debordement_libre = 500;
+extern int numligne;
 
 int verifInsertion(int pos1,int nature){
   if(tabledecla[0][pos1]==nature && tabledecla[2][pos1]==sommet_pile()){
@@ -30,7 +31,7 @@ int verifRegion(int lexAssocie,int nature){
               lexAssocie=tabledecla[1][lexAssocie];
           }
           else{
-            fprintf(stderr,"Erreur une variable existe deja pour son nom\n");
+            fprintf(stderr,"Erreur une variable existe deja pour son nom, doublon à la ligne %d\n",numligne);
             exit(-1);
           }
         }
@@ -41,7 +42,7 @@ int verifRegion(int lexAssocie,int nature){
       }
     }
     else{
-      fprintf(stderr,"Erreur une variable existe deja pour son nom\n");
+      fprintf(stderr,"Erreur une variable existe deja pour son nom, doublon à la ligne %d\n",numligne);
     }
   }
   else{

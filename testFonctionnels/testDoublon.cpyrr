@@ -1,0 +1,6 @@
+PROG
+var x : int;
+var x : float;
+BEGIN
+    x = x+1;
+END
