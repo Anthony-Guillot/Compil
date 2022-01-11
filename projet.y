@@ -9,7 +9,6 @@
   #include "y.tab.h"
   extern int numligne;
   extern char *yytext;
-  arbre listeArbre[30];
   int resultatExpression=0;
   int resultatExpression1=0;
   int resultatExpression2=0;
@@ -65,12 +64,12 @@
 
 %%
 
-programme:PROG corps {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());afficherTableLexico();AfficherTD();afficherTR();afficher_region();afficher_arbre($2,0);printf("\n");}
+programme:PROG corps {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());afficherTableLexico();AfficherTD();afficherTR();afficher_region();printf("\n");}
 ;
 
   /*--- Strucutures globales d'un programme d'abord declaration puis instruction ---*/
-corps:liste_declarations liste_instructions {$$=$2;}
-|liste_instructions {$$=$1;}
+corps:liste_declarations liste_instructions {printf("\narbre de la region [%d]\n",sommet_pile());afficher_arbre($2);$$=$2;}
+|liste_instructions {printf("\narbre de la region [%d]\n",sommet_pile());afficher_arbre($1);$$=$1;}
 ;
 
   /*--- Strucutures des listes de declaration ---*/
@@ -102,10 +101,10 @@ une_dimension:expression {dimensionDebut=resultatExpression;}POINT_POINT express
 declaration_variable:VARIABLE IDF {nombuffer=strdup(yytext);} DEUX_POINTS nom_type {type=strdup(yytext);ajoutVariable(positionLexeme(nombuffer),positionLexeme(type));}
 ;
 
-declaration_procedure:PROCEDURE {nbChamps=0;empiler_region();} IDF {ajoutProcedure(positionLexeme(strdup(yytext)));} liste_parametres {ajoutTRproc(nbChamps);} corps {listeArbre[sommet_pile()]=$7;inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());depiler_region();}
+declaration_procedure:PROCEDURE {nbChamps=0;empiler_region();} IDF {ajoutProcedure(positionLexeme(strdup(yytext)));} liste_parametres {ajoutTRproc(nbChamps);} corps {inserer_region(getTailleBis(),nispile()-1,$7,sommet_pile());depiler_region();}
 ;
 
-declaration_fonction:FONCTION {nbChamps=0;empiler_region();} IDF {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));} liste_parametres RETOURNE type_simple {type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);} corps {listeArbre[sommet_pile()]=$9;inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile());depiler_region();}
+declaration_fonction:FONCTION {nbChamps=0;empiler_region();} IDF {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));} liste_parametres RETOURNE type_simple {type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);} corps {inserer_region(getTailleBis(),nispile()-1,$9,sommet_pile());depiler_region();}
 ;
 /*-----------------------------------------------------------------------*/
   /*--- Strucutures des listes d'instructions---*/
@@ -113,7 +112,7 @@ liste_instructions:DEBUT suite_liste_inst FIN {$$=$2;}
 ;
   /*--- instruction(s) suivis de virgule---*/
 suite_liste_inst:instruction POINT_VIRGULE   {$$=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),$1);}
-|suite_liste_inst instruction POINT_VIRGULE {$$=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),inserer_frere($1,$2));}
+|suite_liste_inst instruction POINT_VIRGULE {$$=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),inserer_frere($2,$1));}
 ;
 
   /*--- Liste des instructions possibles ---*/
@@ -169,7 +168,7 @@ un_param:IDF {nombuffer=strdup(yytext);}DEUX_POINTS type_simple {nbChamps+=1;typ
 resultat_retourne:PARENTHESE_OUVRANTE expression PARENTHESE_FERMANTE {$$=$2;}
 ;
 
-appel:IDF liste_arguments {printf("%d\n",regionProcedure($1->num_lexi));$$=inserer_fils(creer_arbre(APPEL_BIS,-1,-1),listeArbre[regionProcedure($1->num_lexi)]);};
+appel:IDF liste_arguments {$$=inserer_fils(creer_arbre(APPEL_BIS,-1,-1),inserer_frere($1,$2));};
 ;
 
 liste_arguments: {nombuffer=strdup(yytext);$$=creer_arbre(VIDE_BIS,-1,-1);}

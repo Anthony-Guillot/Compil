@@ -1,7 +1,7 @@
 #include"arbre.h"
-
+int tab=0;
 /* affiche dans le terminal un arbre (non fini) */
-void afficher_arbre(arbre a,int tab){
+void afficher_arbre(arbre a){
     int i=0;
     char *chaine,* c="  ";
     switch (a->racine_type)
@@ -102,24 +102,19 @@ case POINT_BIS :
     default:
         break;
     }
-
-    fprintf(stderr,"%10s",chaine);
     
-    if (a->frere!=NULL){
-        tab++;
-        afficher_arbre(a->frere,tab);
-    }
-    
-        
-    if(a->fils!=NULL){
-        tab--;
-        fprintf(stderr,"\n");
-        for(i=0;i<tab;i++){
-            fprintf(stderr,"%10s",c);
+    for(i=0;i<tab;i++){
+            fprintf(stderr,"  ");
         }
-        afficher_arbre(a->fils,tab);
+     fprintf(stderr,"%s\n",chaine);   
+    if(a->fils!=NULL){
+        tab++;
+        afficher_arbre(a->fils);
+        tab--;
     }
-    
+    if(a->frere!=NULL){
+        afficher_arbre(a->frere);
+    }
 }
 
 arbre creer_arbre(int type,int declaration,int lexico){

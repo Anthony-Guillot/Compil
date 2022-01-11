@@ -15,6 +15,7 @@ typedef struct region
     arbre repre; /* arbre de representation de la region */
 }region;
 void init_tab_region();
+arbre recupArbre(int region);
 void inserer_region(int taille,int nis,arbre repre,int i);
 void afficher_region();
 

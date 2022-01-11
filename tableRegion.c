@@ -16,6 +16,10 @@ void inserer_region(int taille,int nis,arbre repre,int i){
     tab_region[i].repre=repre;
 }
 
+arbre recupArbre(int region){
+    return tab_region[region].repre;
+}
+
 void afficher_region(){
     int i=0;
     fprintf(stderr,"\n----------------------\n| Num | Taille | NIS |\n----------------------\n");
