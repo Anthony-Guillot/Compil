@@ -113,7 +113,7 @@ liste_instructions:DEBUT suite_liste_inst FIN {$$=$2;}
 ;
   /*--- instruction(s) suivis de virgule---*/
 suite_liste_inst:instruction POINT_VIRGULE   {$$=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),$1);}
-|suite_liste_inst instruction POINT_VIRGULE {$$=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),inserer_frere($2,$1));}
+|suite_liste_inst instruction POINT_VIRGULE {$$=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),inserer_frere($1,$2));}
 ;
 
   /*--- Liste des instructions possibles ---*/

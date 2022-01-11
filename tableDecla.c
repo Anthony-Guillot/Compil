@@ -117,7 +117,7 @@ int regionProcedure(int lexeme){
       }
     }
   }
-  return tabledecla[dernier][4];
+  return tabledecla[4][dernier];
 }
 
 void ajoutTypeStruct(int lexAssocie,int taille){

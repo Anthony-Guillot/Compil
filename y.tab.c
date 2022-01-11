@@ -1663,7 +1663,7 @@ yyreduce:
 
   case 37:
 #line 116 "projet.y" /* yacc.c:1646  */
-    {(yyval.type1)=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),inserer_frere((yyvsp[-1].type1),(yyvsp[-2].type1)));}
+    {(yyval.type1)=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),inserer_frere((yyvsp[-2].type1),(yyvsp[-1].type1)));}
 #line 1668 "y.tab.c" /* yacc.c:1646  */
     break;
 
