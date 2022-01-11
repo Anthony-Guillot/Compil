@@ -2,8 +2,9 @@
 %{
     #include <stdio.h>
     #include <string.h>
+    #include "arbre.h"
     #include "y.tab.h"
-  #include "tableLexico.h"
+    #include "tableLexico.h"
     #define ERREUR -99
     int numligne=1; 
 %}
@@ -57,8 +58,8 @@ bool {(strdup(yytext));return BOOLEEN;}
 \) {return PARENTHESE_FERMANTE;}
 \{ {return ACCOLADE_OUVRANT;}
 \} {return ACCOLADE_FERMANTE;}
-0|([1-9][0-9]*) {yylval=atoi(yytext);return CSTE_ENTIERE;}
-0|([1-9][0-9]*)\.([0-9]*[1-9])|0 {yylval=atof(yytext);return CSTE_REEL;}
+0|([1-9][0-9]*) {yylval.type2=atoi(yytext);return CSTE_ENTIERE;}
+0|([1-9][0-9]*)\.([0-9]*[1-9])|0 {yylval.type3=atof(yytext);return CSTE_REEL;}
 \"[a-zA-Z]\" {return CSTE_CHAR;}
 \".*\" {return CSTE_CHAINE;}
 inst_void {return VIDE;}
@@ -80,7 +81,7 @@ inst_void {return VIDE;}
 \> {return SUP;}
 
     /*---Gestion des idf---*/
-[a-zA-Z][a-zA-Z0-9_]* {inserer(strdup(yytext));return IDF;} 
+[a-zA-Z][a-zA-Z0-9_]* {inserer(strdup(yytext));yylval.type1=creer_arbre(IDF_BIS,-1,positionLexeme(yytext));return IDF;} 
 
 
     /*---gestion de la ligne d'erreur---*/

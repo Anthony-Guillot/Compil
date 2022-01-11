@@ -14,7 +14,11 @@ int verifRegion(int pos1,int nature);
 
 int tailleType(int lexType);
 
+int chercheVar(int lexeme);
+
 int chercheType(int lexeme);
+
+int regionProcedure(int lexeme);
 
 void ajoutTypeStruct(int lexAssocie,int taille);
 

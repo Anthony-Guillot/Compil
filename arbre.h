@@ -35,6 +35,9 @@
 #define CONDITION_BIS 27
 #define TQ_BIS 28
 #define VIDE_BIS 29
+#define RETURN_BIS 30
+#define APPEL_BIS 31
+#define POINT_BIS 32
 
 
 typedef struct noeud
@@ -50,7 +53,7 @@ typedef noeud * arbre;
 
 void afficher_arbre(arbre a,int i);
 arbre creer_arbre(int type,int declaration,int lexico);
-void inserer_fils(arbre pere,arbre fils);
-void inserer_frere(arbre pere, arbre frere);
+arbre inserer_fils(arbre pere,arbre fils);
+arbre inserer_frere(arbre pere, arbre frere);
 
 #endif

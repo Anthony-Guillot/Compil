@@ -80,7 +80,7 @@ int chercheType(int lexeme){
 }
 int chercheVar(int lexeme){
   int i,dernier=-1,min=nispile();
-  if(estdanspile(tabledecla[2][lexeme]) &&(tabledecla[0][lexeme]==3 || tabledecla[0][lexeme]==40)){
+  if(estdanspile(tabledecla[2][lexeme]) &&(tabledecla[0][lexeme]==3 || tabledecla[0][lexeme]==4)){
     dernier=lexeme;
   }
   while(tabledecla[1][lexeme]!=-1){
@@ -91,13 +91,35 @@ int chercheVar(int lexeme){
       lexeme=tabledecla[1][lexeme];
     }
     if(estdanspile(tabledecla[2][lexeme])){
-      if(positionDansPile(tabledecla[2][lexeme])<min &&(tabledecla[0][lexeme]==1 || tabledecla[0][lexeme]==2 || tabledecla[0][lexeme]==0)){
+      if(positionDansPile(tabledecla[2][lexeme])<min &&(tabledecla[0][lexeme]==3 || tabledecla[0][lexeme]==4)){
         dernier=lexeme;
       }
     }
   }
   return dernier;
 }
+
+int regionProcedure(int lexeme){
+  int i,dernier=-1,min=nispile();
+  if(tabledecla[0][lexeme]==5 || tabledecla[0][lexeme]==6){
+    dernier=lexeme;
+  }
+  while(tabledecla[1][lexeme]!=-1){
+    if(tabledecla[1][lexeme]==-1){
+      break;
+    }
+    else{
+      lexeme=tabledecla[1][lexeme];
+    }
+    if(estdanspile(tabledecla[2][lexeme])){
+      if(positionDansPile(tabledecla[2][lexeme])<min &&(tabledecla[0][lexeme]==5 || tabledecla[0][lexeme]==6)){
+        dernier=lexeme;
+      }
+    }
+  }
+  return tabledecla[dernier][4];
+}
+
 void ajoutTypeStruct(int lexAssocie,int taille){
   lexAssocie=verifRegion(lexAssocie,1);
   tabledecla[0][lexAssocie]=1;
