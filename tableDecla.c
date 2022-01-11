@@ -1,7 +1,7 @@
 #include "tableDecla.h"
 #include "pregion.h"
 /*Author GUILLOT Anthony*/
-/*Co-author CONDOM Mahieu*/
+/*Co-author CONDOM Matthieu*/
 int tabledecla[5][1000];
 int debordement_libre = 500;
 extern int numligne;
@@ -14,6 +14,7 @@ int verifInsertion(int pos1,int nature){
     return 0;
   }
 }
+
 int verifRegion(int lexAssocie,int nature){
   if(tabledecla[0][lexAssocie]!=-1){
     if(verifInsertion(lexAssocie,nature)==0){
@@ -79,6 +80,7 @@ int chercheType(int lexeme){
   }
   return dernier;
 }
+
 int chercheVar(int lexeme){
   int i,dernier=-1,min=nispile();
   if(estdanspile(tabledecla[2][lexeme]) &&(tabledecla[0][lexeme]==3 || tabledecla[0][lexeme]==4)){
@@ -99,10 +101,9 @@ int chercheVar(int lexeme){
   }
   return dernier;
 }
-
-int regionProcedure(int lexeme){
+int chercheProc(int lexeme){
   int i,dernier=-1,min=nispile();
-  if(tabledecla[0][lexeme]==5 || tabledecla[0][lexeme]==6){
+  if(estdanspile(tabledecla[2][lexeme]) &&(tabledecla[0][lexeme]==5 || tabledecla[0][lexeme]==6)){
     dernier=lexeme;
   }
   while(tabledecla[1][lexeme]!=-1){
@@ -118,7 +119,7 @@ int regionProcedure(int lexeme){
       }
     }
   }
-  return tabledecla[4][dernier];
+  return dernier;
 }
 
 void ajoutTypeStruct(int lexAssocie,int taille){
@@ -195,14 +196,6 @@ void initDecla(){
     tabledecla[4][2] = 1;
     tabledecla[4][3] = 1;
     
-}
-
-int DescClass(int indice){
-  return tabledecla[3][indice];
-}
-
-int ExecClass(int desc){
-  return tabledecla[4][desc];
 }
 
 void AfficherTD(){

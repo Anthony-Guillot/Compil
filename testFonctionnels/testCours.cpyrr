@@ -25,14 +25,14 @@ proc a
         BEGIN
             while(i<3)do
             BEGIN
-                i=i+1;
-                while(j<2)do
+                i = i + 1;
+                while(j < 2)do
                 BEGIN
-                    j=j+1;
-                    write("\nNumero de securie sociale :");
+                    j = j + 1;
                 END;
                 T = j;
             END;
+            i = i + 1;
         END;
     BEGIN
     saisie;

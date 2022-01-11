@@ -557,16 +557,18 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "projet.l"
 /*--- Inclusion des fichiers ---*/
-#line 3 "projet.l"
+/*Auteur : BONNEFOY Pierre  GUILLOT Anthony*/
+#line 5 "projet.l"
     #include <stdio.h>
     #include <string.h>
     #include "arbre.h"
     #include "y.tab.h"
     #include "tableLexico.h"
+    #include "tableDecla.h"
     #define ERREUR -99
     int numligne=1; 
-#line 569 "lex.yy.c"
-#line 570 "lex.yy.c"
+#line 571 "lex.yy.c"
+#line 572 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -783,9 +785,11 @@ YY_DECL
 		}
 
 	{
-#line 11 "projet.l"
+#line 14 "projet.l"
 
-#line 789 "lex.yy.c"
+#line 16 "projet.l"
+  /*--- s'occupe de la gestion des commentaires---*/
+#line 793 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -845,326 +849,325 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 12 "projet.l"
+#line 17 "projet.l"
 {;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "projet.l"
+#line 18 "projet.l"
 {;}
 	YY_BREAK
 /*---Declaration des debuts de declarations---*/
 case 3:
 YY_RULE_SETUP
-#line 15 "projet.l"
+#line 20 "projet.l"
 {return VARIABLE;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 16 "projet.l"
+#line 21 "projet.l"
 {return PROCEDURE;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 17 "projet.l"
+#line 22 "projet.l"
 {return FONCTION;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "projet.l"
+#line 23 "projet.l"
 {return TYPE;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "projet.l"
+#line 24 "projet.l"
 {return TABLEAU;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 20 "projet.l"
+#line 25 "projet.l"
 {return DE;}
 	YY_BREAK
 /*--- Déclaration des fonctions de base ---*/
 case 9:
 YY_RULE_SETUP
-#line 23 "projet.l"
+#line 28 "projet.l"
 {return TANT_QUE;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 24 "projet.l"
+#line 29 "projet.l"
 {return FAIRE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 25 "projet.l"
+#line 30 "projet.l"
 {return SI;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 26 "projet.l"
+#line 31 "projet.l"
 {return ALORS;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 27 "projet.l"
+#line 32 "projet.l"
 {return SINON;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 28 "projet.l"
+#line 33 "projet.l"
 {return POUR;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 29 "projet.l"
+#line 34 "projet.l"
 {return RETOURNE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 30 "projet.l"
+#line 35 "projet.l"
 {return VRAI;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 31 "projet.l"
+#line 36 "projet.l"
 {return FAUX;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 32 "projet.l"
+#line 37 "projet.l"
 {return LIRE;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 33 "projet.l"
+#line 38 "projet.l"
 {return ECRIRE;}
 	YY_BREAK
 /*--- Balise de structure ---*/
 case 20:
 YY_RULE_SETUP
-#line 36 "projet.l"
+#line 41 "projet.l"
 {return PROG;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 37 "projet.l"
+#line 42 "projet.l"
 {return POINT_VIRGULE;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 38 "projet.l"
+#line 43 "projet.l"
 {return VIRGULE;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 39 "projet.l"
+#line 44 "projet.l"
 {return DEBUT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 40 "projet.l"
+#line 45 "projet.l"
 {return FIN;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 41 "projet.l"
+#line 46 "projet.l"
 {return DEUX_POINTS;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 42 "projet.l"
+#line 47 "projet.l"
 {return POINT_POINT;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 43 "projet.l"
+#line 48 "projet.l"
 {return POINT;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 44 "projet.l"
+#line 49 "projet.l"
 {return STRUCT;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 45 "projet.l"
+#line 50 "projet.l"
 {return FSTRUCT;}
 	YY_BREAK
 /*--- Déclaration des types simples ---*/
 case 30:
 YY_RULE_SETUP
-#line 48 "projet.l"
+#line 53 "projet.l"
 {(strdup(yytext));return ENTIER;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 49 "projet.l"
+#line 54 "projet.l"
 {(strdup(yytext));return REEL;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 50 "projet.l"
+#line 55 "projet.l"
 {(strdup(yytext));return CARACTERE;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 51 "projet.l"
+#line 56 "projet.l"
 {(strdup(yytext));return CHAINE;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 52 "projet.l"
+#line 57 "projet.l"
 {(strdup(yytext));return BOOLEEN;}
 	YY_BREAK
 /*--- Déclaration de la grammaire ---*/
 case 35:
 YY_RULE_SETUP
-#line 55 "projet.l"
+#line 60 "projet.l"
 {return CROCHET_OUVRANT;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 56 "projet.l"
+#line 61 "projet.l"
 {return CROCHET_FERMANT;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 57 "projet.l"
+#line 62 "projet.l"
 {return PARENTHESE_OUVRANTE;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 58 "projet.l"
+#line 63 "projet.l"
 {return PARENTHESE_FERMANTE;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 59 "projet.l"
+#line 64 "projet.l"
 {return ACCOLADE_OUVRANT;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 60 "projet.l"
+#line 65 "projet.l"
 {return ACCOLADE_FERMANTE;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 61 "projet.l"
+#line 66 "projet.l"
 {yylval.type2=atoi(yytext);return CSTE_ENTIERE;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 62 "projet.l"
+#line 67 "projet.l"
 {yylval.type3=atof(yytext);return CSTE_REEL;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 63 "projet.l"
+#line 68 "projet.l"
 {return CSTE_CHAR;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 64 "projet.l"
+#line 69 "projet.l"
 {return CSTE_CHAINE;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 65 "projet.l"
+#line 70 "projet.l"
 {return VIDE;}
 	YY_BREAK
 /*--- Déclaration des oppérateur ---*/
 case 46:
 YY_RULE_SETUP
-#line 67 "projet.l"
+#line 72 "projet.l"
 {return OPAFF;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 68 "projet.l"
+#line 73 "projet.l"
 {return AND;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 69 "projet.l"
+#line 74 "projet.l"
 {return OR;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 70 "projet.l"
+#line 75 "projet.l"
 {return DIV;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 71 "projet.l"
+#line 76 "projet.l"
 {return PLUS;}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 72 "projet.l"
+#line 77 "projet.l"
 {return MOINS;}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 73 "projet.l"
+#line 78 "projet.l"
 {return MULT;}
 	YY_BREAK
 /*--- Déclaration des oppérateur bool --*/
 case 53:
 YY_RULE_SETUP
-#line 76 "projet.l"
+#line 81 "projet.l"
 {return EGALE;}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 77 "projet.l"
+#line 82 "projet.l"
 {return DIFF;}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 78 "projet.l"
+#line 83 "projet.l"
 {return INFE;}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 79 "projet.l"
+#line 84 "projet.l"
 {return SUPE;}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 80 "projet.l"
+#line 85 "projet.l"
 {return INF;}
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 81 "projet.l"
+#line 86 "projet.l"
 {return SUP;}
 	YY_BREAK
 /*---Gestion des idf---*/
 case 59:
 YY_RULE_SETUP
-#line 84 "projet.l"
-{inserer(strdup(yytext));yylval.type1=creer_arbre(IDF_BIS,-1,positionLexeme(yytext));return IDF;} 
+#line 89 "projet.l"
+{inserer(strdup(yytext));yylval.type1=creer_arbre(IDF_BIS,chercheVar(positionLexeme(strdup(yytext))),positionLexeme(strdup(yytext)));return IDF;} 
 	YY_BREAK
 /*---gestion de la ligne d'erreur---*/
 case 60:
 /* rule 60 can match eol */
 YY_RULE_SETUP
-#line 88 "projet.l"
+#line 93 "projet.l"
 {numligne++;}
 	YY_BREAK
-/*---gestion des commentaires sur plusieurs ou une seul lignes---*/
 case 61:
 YY_RULE_SETUP
-#line 93 "projet.l"
+#line 95 "projet.l"
 {return ERROR;}
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 94 "projet.l"
+#line 96 "projet.l"
 ECHO;
 	YY_BREAK
-#line 1168 "lex.yy.c"
+#line 1171 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2169,5 +2172,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 94 "projet.l"
+#line 96 "projet.l"
 

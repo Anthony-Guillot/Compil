@@ -1,14 +1,18 @@
 /*--- Inclusion des fichiers ---*/
+/*Auteur : BONNEFOY Pierre  GUILLOT Anthony*/
+
 %{
     #include <stdio.h>
     #include <string.h>
     #include "arbre.h"
     #include "y.tab.h"
     #include "tableLexico.h"
+    #include "tableDecla.h"
     #define ERREUR -99
     int numligne=1; 
 %}
 %%
+  /*--- s'occupe de la gestion des commentaires---*/
 \/\*([^*]|\*+[^*/])*\*+\/ {;}
 \/\/.* {;}
     /*---Declaration des debuts de declarations---*/
@@ -81,14 +85,11 @@ inst_void {return VIDE;}
 \> {return SUP;}
 
     /*---Gestion des idf---*/
-[a-zA-Z][a-zA-Z0-9_]* {inserer(strdup(yytext));yylval.type1=creer_arbre(IDF_BIS,-1,positionLexeme(yytext));return IDF;} 
+[a-zA-Z][a-zA-Z0-9_]* {inserer(strdup(yytext));yylval.type1=creer_arbre(IDF_BIS,chercheVar(positionLexeme(strdup(yytext))),positionLexeme(strdup(yytext)));return IDF;} 
 
 
     /*---gestion de la ligne d'erreur---*/
 [\n]  {numligne++;}
-
-    /*---gestion des commentaires sur plusieurs ou une seul lignes---*/
-
 
 \" {return ERROR;}
 %%

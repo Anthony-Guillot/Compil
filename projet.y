@@ -1,4 +1,5 @@
 %{
+  /*Auteur :GUILLOT Anthony*/
   #include <stdio.h>
   #include "tableLexico.h"
   #include "tableDecla.h"
@@ -68,8 +69,8 @@ programme:PROG corps {inserer_region(getTailleBis(),nispile()-1,NULL,sommet_pile
 ;
 
   /*--- Strucutures globales d'un programme d'abord declaration puis instruction ---*/
-corps:liste_declarations liste_instructions {printf("\narbre de la region [%d]\n",sommet_pile());afficher_arbre($2);$$=$2;}
-|liste_instructions {printf("\narbre de la region [%d]\n",sommet_pile());afficher_arbre($1);$$=$1;}
+corps:liste_declarations liste_instructions {printf("\narbre de la region : %d\n",sommet_pile());afficher_arbre($2);$$=$2;}
+|liste_instructions {printf("\narbre de la region : %d\n",sommet_pile());afficher_arbre($1);$$=$1;}
 ;
 
   /*--- Strucutures des listes de declaration ---*/
@@ -112,7 +113,7 @@ liste_instructions:DEBUT suite_liste_inst FIN {$$=$2;}
 ;
   /*--- instruction(s) suivis de virgule---*/
 suite_liste_inst:instruction POINT_VIRGULE   {$$=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),$1);}
-|suite_liste_inst instruction POINT_VIRGULE {$$=inserer_fils(creer_arbre(LISTE_INST_BIS,-1,-1),inserer_frere($2,$1));}
+|suite_liste_inst instruction POINT_VIRGULE {$$=inserer_frere($1,$2);}
 ;
 
   /*--- Liste des instructions possibles ---*/
@@ -168,7 +169,7 @@ un_param:IDF {nombuffer=strdup(yytext);}DEUX_POINTS type_simple {nbChamps+=1;typ
 resultat_retourne:PARENTHESE_OUVRANTE expression PARENTHESE_FERMANTE {$$=$2;}
 ;
 
-appel:IDF liste_arguments {$$=inserer_fils(creer_arbre(APPEL_BIS,-1,-1),inserer_frere($1,$2));};
+appel:IDF liste_arguments {$1->num_declaration=chercheProc($1->num_lexi);$$=inserer_fils(creer_arbre(APPEL_BIS,-1,-1),inserer_frere($1,$2));};
 ;
 
 liste_arguments: {nombuffer=strdup(yytext);$$=creer_arbre(VIDE_BIS,-1,-1);}
@@ -245,7 +246,7 @@ suite_format:
 |VIRGULE variable suite_format
 ;
 
-variable:IDF {$$=creer_arbre(IDF_BIS,chercheVar(positionLexeme(strdup(yytext))),positionLexeme(strdup(yytext)));}
+variable:IDF {$$=$1;}
 | tableau {$$=inserer_fils(creer_arbre(TAB_BIS,-1,-1),$1);}
 | variable POINT variable {$$=inserer_fils(creer_arbre(POINT_BIS,-1,-1),inserer_frere($1,$3));}
 ;

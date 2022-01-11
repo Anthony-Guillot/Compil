@@ -1,6 +1,7 @@
 #include"arbre.h"
+/*Auteur : BONNEFOY Pierre*/
 int tab=0;
-/* affiche dans le terminal un arbre (non fini) */
+
 void afficher_arbre(arbre a){
     int i=0;
     char *chaine,* c="  ";
@@ -106,7 +107,7 @@ case POINT_BIS :
     for(i=0;i<tab;i++){
             fprintf(stderr,"  ");
         }
-     fprintf(stderr,"%s\n",chaine);   
+     fprintf(stderr,"%s|%d||%d|\n",chaine,a->num_declaration,a->num_lexi);   
     if(a->fils!=NULL){
         tab++;
         afficher_arbre(a->fils);

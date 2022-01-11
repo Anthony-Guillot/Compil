@@ -1,10 +1,10 @@
 #include "tableLexico.h"
 #include <string.h>
-
+/*Auteur : GUILLOT Anthony*/ 
 lexico table[500];
 hashc tabhashcode[31];
-/*---Calcul le hashcode d'un lexeme---*/
-int calcul_hascode(char *mot, int taille)
+
+int calcul_hashcode(char *mot, int taille)
 {
     int somme=0;
     for (int i = 0; i < taille; i++)
@@ -14,7 +14,6 @@ int calcul_hascode(char *mot, int taille)
     return somme % 32;
 }
 
-/*---Initialise le tableau de hashcode et le tableau lexico---*/
 void init()
 {
     for (int i = 0; i < 500; i++)
@@ -42,7 +41,6 @@ void init()
 
 }
 
-/*---Affichage du tableau lexicographique---*/
 void afficherTableLexico()
 {
     printf("------------------------------------------\n");
@@ -68,7 +66,6 @@ void afficherTableLexico()
     printf("--------------\n");*/
 }
 
-/*---Parcours le tableau, et insere le lexeme, sa taille a la fin et retourne la position inserer---*/
 int insererbis(char *lexeme)
 {
     int i;
@@ -84,7 +81,6 @@ int insererbis(char *lexeme)
     return i;
 }
 
-/*---Verifier si le lexeme a position donnée est different , si oui, il verifie le suivant s'il en existe un---*/
 int  verif_lexeme(char *lexeme, int position)
 {
     int longeur;
@@ -120,13 +116,12 @@ int  verif_lexeme(char *lexeme, int position)
     }
 }
 
-/*---Verifie le hashcode pour savoir ou commencer a parcourir les verifications---*/
 void inserer(char *lexeme)
 {
     int retour = verif_hachcode(lexeme);
     if (retour == -1)
     {
-        tabhashcode[calcul_hascode(lexeme, strlen(lexeme))].hashcode = insererbis(lexeme);
+        tabhashcode[calcul_hashcode(lexeme, strlen(lexeme))].hashcode = insererbis(lexeme);
     }
     else
     {
@@ -144,11 +139,10 @@ int positionLexeme(char *lexeme){
     return -1;
 }
 
-/*---Verifie si le haschode est deja present, et si oui, renvoie sa poosition---*/
 int verif_hachcode(char *lexeme)
 {
     int hc;
-    hc = calcul_hascode(lexeme, strlen(lexeme));
+    hc = calcul_hashcode(lexeme, strlen(lexeme));
     if (tabhashcode[hc].hashcode == -1)
     {
         return -1;

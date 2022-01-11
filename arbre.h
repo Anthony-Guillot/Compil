@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+/*Auteur : BONNEFOY Pierre*/
 #ifndef ARBRE_H
 #define ARBRE_H
 
@@ -50,10 +50,13 @@ typedef struct noeud
 }noeud;
 
 typedef noeud * arbre;
-
+/*--- Affichage d'un arbre donnée en parametre ---*/
 void afficher_arbre(arbre a);
+/*--- Alloue la memoire pour un arbre et initialise avec les valeurs de données en parametre ---*/
 arbre creer_arbre(int type,int declaration,int lexico);
+/*--- rajoute le fils donnée en 2eme parametre a l'arbre en premier parametre ---*/
 arbre inserer_fils(arbre pere,arbre fils);
+/*--- rajoute le frere donnée en 2eme parametre a l'arbre en premier parametre ---*/
 arbre inserer_frere(arbre pere, arbre frere);
 
 #endif

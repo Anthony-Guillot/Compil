@@ -170,7 +170,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 28 "projet.y" /* yacc.c:1909  */
+#line 29 "projet.y" /* yacc.c:1909  */
 
   arbre type1;
   int type2;

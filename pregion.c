@@ -1,4 +1,5 @@
 #include "pregion.h"
+/*Auteur : CONDOM Matthieu*/
 int region=0;
 pile p;
 
