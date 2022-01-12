@@ -1,0 +1,5 @@
+PROG
+type tableau : tab[1..5]of int;
+BEGIN
+    inst_void;
+END

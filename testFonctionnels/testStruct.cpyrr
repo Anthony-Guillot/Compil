@@ -1,0 +1,8 @@
+PROG
+type structure : struct
+    champ1 : int;
+    champ2 : int;
+    champ3 : float endstruct;
+BEGIN
+    inst_void;
+END
