@@ -8,22 +8,30 @@
   #include "pregion.h"
   #include "arbre.h"
   #include "y.tab.h"
+  #include "projet.h"
+  #define INT_TYPE 0
+  #define FLOAT_TYPE 1
+  #define CHAR_TYPE 2
+  #define BOOL_TYPE 3
   extern int numligne;
   extern char *yytext;
+  int fonct =0;
   int resultatExpression=0;
   int resultatExpression1=0;
   int resultatExpression2=0;
   char *nombuffer;
   char *nombuffer2;
   char *type;
+  int debutParam=0;
+  int typeExpression=0;
+  int typeExpression1=0;
+  int typeExpression2=0;
   int decalage=0;
   int tailleTab=0;
   int tailleStruct=0;
   int dimensionDebut=0;
   int dimensionFin=0;
   int nbChamps=0;
-  int yylex();
-  int yyerror();
 %}
 
 %union{
@@ -102,10 +110,10 @@ une_dimension:expression {dimensionDebut=resultatExpression;}POINT_POINT express
 declaration_variable:VARIABLE IDF {nombuffer=strdup(yytext);} DEUX_POINTS nom_type {type=strdup(yytext);ajoutVariable(positionLexeme(nombuffer),positionLexeme(type));}
 ;
 
-declaration_procedure:PROCEDURE {nbChamps=0;empiler_region();} IDF {ajoutProcedure(positionLexeme(strdup(yytext)));} liste_parametres {ajoutTRproc(nbChamps);} corps {inserer_region(getTailleBis(),nispile()-1,$7,sommet_pile());depiler_region();}
+declaration_procedure:PROCEDURE {fonct=0;nbChamps=0;empiler_region();} IDF {ajoutProcedure(positionLexeme(strdup(yytext)));} liste_parametres {ajoutTRproc(nbChamps);} corps {inserer_region(getTailleBis(),nispile()-1,$7,sommet_pile());depiler_region();}
 ;
 
-declaration_fonction:FONCTION {nbChamps=0;empiler_region();} IDF {nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));} liste_parametres RETOURNE type_simple {type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);} corps {inserer_region(getTailleBis(),nispile()-1,$9,sommet_pile());depiler_region();}
+declaration_fonction:FONCTION {fonct=1;nbChamps=0;empiler_region();} IDF {debutParam=1;nombuffer=strdup(yytext);ajoutFonction(positionLexeme(strdup(yytext)));} liste_parametres RETOURNE type_simple {type=strdup(yytext);ajoutTRfonc(positionLexeme(type),nbChamps);} corps {inserer_region(getTailleBis(),nispile()-1,$9,sommet_pile());depiler_region();}
 ;
 /*-----------------------------------------------------------------------*/
   /*--- Strucutures des listes d'instructions---*/
@@ -161,7 +169,7 @@ liste_param:un_param
 |liste_param POINT_VIRGULE un_param
 ;
 
-un_param:IDF {nombuffer=strdup(yytext);}DEUX_POINTS type_simple {nbChamps+=1;type=strdup(yytext);ajoutParam(positionLexeme(nombuffer),positionLexeme(type));}
+un_param:IDF {nombuffer=strdup(yytext);}DEUX_POINTS type_simple {nbChamps+=1;type=strdup(yytext);ajoutParam(positionLexeme(nombuffer),positionLexeme(type));ajoutTRParam(positionLexeme(nombuffer),positionLexeme(type),fonct,debutParam);debutParam=0;}
 ;
 
   /*--- Strucuture d'un return ---*/
@@ -195,7 +203,16 @@ tant_que:TANT_QUE PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE F
 ;
 
   /*--- Strucuture d'une affectation ---*/
-affectation:variable OPAFF expression {$$=inserer_fils(creer_arbre(AFFECT_BIS,-1,-1),inserer_frere($1,$3));}
+affectation:variable OPAFF expression 
+{
+  if(typeVar($1->num_declaration)==typeExpression){
+    $$=inserer_fils(creer_arbre(AFFECT_BIS,-1,-1),inserer_frere($1,$3));
+  }
+  else{
+    fprintf(stderr,"Erreur affectation impossible(type differents) ligne %d\n",numligne);
+    yyerror();
+  }
+}
 ;
 
 /*--- description des formes possibles de toutes les expressions (arithmétiques et booléennes) ---*/
@@ -203,20 +220,52 @@ affectation:variable OPAFF expression {$$=inserer_fils(creer_arbre(AFFECT_BIS,-1
 expression:expression_arithmetique {$$=$1;}
 |expression_booleenne {$$=$1;}
 ;
-expression_arithmetique:expression_arithmetique {resultatExpression1=resultatExpression;} PLUS expression_arithmetique2 {resultatExpression2=resultatExpression;} {$$=inserer_fils(creer_arbre(PLUS_BIS,-1,-1),inserer_frere($1,$4));resultatExpression=resultatExpression1+resultatExpression2;}
-|expression_arithmetique {resultatExpression1=resultatExpression;} MOINS expression_arithmetique2 {resultatExpression2=resultatExpression;}{$$=inserer_fils(creer_arbre(MOINS_BIS,-1,-1),inserer_frere($1,$4));resultatExpression=resultatExpression1-resultatExpression2;}
+expression_arithmetique:expression_arithmetique {typeExpression1=typeExpression; resultatExpression1=resultatExpression;} PLUS expression_arithmetique2 {typeExpression2=typeExpression;resultatExpression2=resultatExpression;} {
+  if(typeExpression1==typeExpression2){
+  $$=inserer_fils(creer_arbre(PLUS_BIS,-1,-1),inserer_frere($1,$4));resultatExpression=resultatExpression1+resultatExpression2;
+  }
+  else{
+    fprintf(stderr,"Erreur addition impossible(type differents) ligne %d\n",numligne);
+    yyerror();
+  }
+}
+|expression_arithmetique {typeExpression1=typeExpression;resultatExpression1=resultatExpression;} MOINS expression_arithmetique2 {typeExpression2=typeExpression;resultatExpression2=resultatExpression;}{
+  if(typeExpression1==typeExpression2){
+    $$=inserer_fils(creer_arbre(MOINS_BIS,-1,-1),inserer_frere($1,$4));resultatExpression=resultatExpression1-resultatExpression2;
+  }
+  else{
+    fprintf(stderr,"Erreur soustraction impossible(type differents) ligne %d\n",numligne);
+    yyerror();
+  }
+}
 |expression_arithmetique2 {$$=$1;}
 ;
 
-expression_arithmetique2:expression_arithmetique2 {resultatExpression1=resultatExpression;} MULT  expression_arithmetique3 {resultatExpression2=resultatExpression;}{$$=inserer_fils(creer_arbre(MULT_BIS,-1,-1),inserer_frere($1,$4));resultatExpression=resultatExpression1*resultatExpression2;}
-|expression_arithmetique2 {resultatExpression1=resultatExpression;} DIV expression_arithmetique3 {resultatExpression2=resultatExpression;}{$$=inserer_fils(creer_arbre(DIV_BIS,-1,-1),inserer_frere($1,$4));resultatExpression=resultatExpression1/resultatExpression2;}
+expression_arithmetique2:expression_arithmetique2 {typeExpression1=typeExpression;resultatExpression1=resultatExpression;} MULT  expression_arithmetique3 {typeExpression2=typeExpression;resultatExpression2=resultatExpression;}{
+  if(typeExpression1==typeExpression2){
+    $$=inserer_fils(creer_arbre(MULT_BIS,-1,-1),inserer_frere($1,$4));resultatExpression=resultatExpression1*resultatExpression2;
+    }
+    else{
+      fprintf(stderr,"Erreur multiplication impossible(type differents) ligne %d\n",numligne);
+    yyerror();
+    }
+}
+|expression_arithmetique2 {typeExpression1=typeExpression;resultatExpression1=resultatExpression;} DIV expression_arithmetique3 {typeExpression2=typeExpression;resultatExpression2=resultatExpression;}{
+  if(typeExpression1==typeExpression2){
+    $$=inserer_fils(creer_arbre(DIV_BIS,-1,-1),inserer_frere($1,$4));resultatExpression=resultatExpression1/resultatExpression2;
+    }
+    else{
+      fprintf(stderr,"Erreur division impossible(type differents) ligne %d\n",numligne);
+    yyerror();
+    }
+}
 |expression_arithmetique3 {$$=$1;}
 ;
 
 expression_arithmetique3:PARENTHESE_OUVRANTE expression_arithmetique PARENTHESE_FERMANTE {$$=$2;}
-|CSTE_ENTIERE {$$=creer_arbre(CSTE_INT_BIS,$1,-1);resultatExpression=$1;}
-|CSTE_REEL {$$=creer_arbre(CSTE_FLOAT_BIS,$1,-1);}
-|CSTE_CHAINE {$$=creer_arbre(CSTE_FLOAT_BIS,-1,-1);}
+|CSTE_ENTIERE {typeExpression=INT_TYPE;$$=creer_arbre(CSTE_INT_BIS,$1,-1);resultatExpression=$1;}
+|CSTE_REEL {typeExpression=FLOAT_TYPE;$$=creer_arbre(CSTE_FLOAT_BIS,$1,-1);}
+|CSTE_CHAINE {typeExpression=CHAR_TYPE;$$=creer_arbre(CSTE_CHAR_BIS,-1,-1);}
 |variable {$$=$1;}
 ;
 
@@ -246,7 +295,7 @@ suite_format:
 |VIRGULE variable suite_format
 ;
 
-variable:IDF {$$=$1;}
+variable:IDF {typeExpression=typeVar($1->num_declaration);$$=$1;}
 | tableau {$$=inserer_fils(creer_arbre(TAB_BIS,-1,-1),$1);}
 | variable POINT variable {$$=inserer_fils(creer_arbre(POINT_BIS,-1,-1),inserer_frere($1,$3));}
 ;
@@ -255,6 +304,7 @@ tableau:IDF CROCHET_OUVRANT expression CROCHET_FERMANT {$$=creer_arbre(TAB_BIS,-
 %%
 int yyerror(){
   printf("Erreur de syntaxe à la ligne %d\n",numligne);
+  exit(-1);
  }
 
 int main(){

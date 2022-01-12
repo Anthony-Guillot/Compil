@@ -1,0 +1,5 @@
+PROG
+var i : float;
+BEGIN
+i=3;
+END

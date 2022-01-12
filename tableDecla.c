@@ -1,5 +1,6 @@
 #include "tableDecla.h"
 #include "pregion.h"
+#include "projet.h"
 /*Author GUILLOT Anthony*/
 /*Co-author CONDOM Matthieu*/
 int tabledecla[5][1000];
@@ -33,7 +34,7 @@ int verifRegion(int lexAssocie,int nature){
           }
           else{
             fprintf(stderr,"Erreur une variable existe deja pour son nom, doublon à la ligne %d\n",numligne);
-            exit(-1);
+            yyerror();
           }
         }
         tabledecla[1][lexAssocie]=debordement_libre;
@@ -44,6 +45,7 @@ int verifRegion(int lexAssocie,int nature){
     }
     else{
       fprintf(stderr,"Erreur une variable existe deja pour son nom, doublon à la ligne %d\n",numligne);
+      yyerror();
     }
   }
   else{
@@ -273,4 +275,8 @@ void AfficherTD(){
     printf("|%-4d|%-8s|%-3d|%-3d|%-3d|%-3d|\n", i, chaine, tabledecla[1][i], tabledecla[2][i], tabledecla[3][i], tabledecla[4][i]);
    }
    printf("-------------------------------\n");
+}
+
+int typeVar(int lexAssocie){
+  return tabledecla[3][lexAssocie];
 }

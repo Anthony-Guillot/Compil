@@ -33,4 +33,6 @@ void ajoutProcedure(int lexAssocie);
 void initDecla();
 /*--- Affiche le tableau des declarations ---*/
 void AfficherTD();
+/*--- retourne le type d'une variable ou d'un parametre ---*/
+int typeVar(int lexAssocie);
 #endif

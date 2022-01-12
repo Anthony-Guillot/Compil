@@ -38,6 +38,7 @@
 #define RETURN_BIS 30
 #define APPEL_BIS 31
 #define POINT_BIS 32
+#define CSTE_CHAR_BIS 33
 
 
 typedef struct noeud

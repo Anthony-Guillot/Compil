@@ -50,8 +50,8 @@ void TRdimtab(int x, int y){
 
 void ajoutTRfonc(int type, int nb){
   i++;
-  tablerepre[ibase+1]= type;
-  tablerepre[ibase]= nb;
+  tablerepre[ibase]= type;
+  tablerepre[ibase+1]= nb;
   ibase=i;
 }
 
@@ -61,8 +61,21 @@ void ajoutTRproc(int nb){
   ibase=i;
 }
 
+void ajoutTRParam(int lexico,int type,int fonction,int debut){
+  if(fonction==1 && debut==1){
+    i++;
+  }
+  i++;
+  tablerepre[i]= lexico;
+  i++;
+  tablerepre[i]= type;
+}
+
 void afficherTR(){
   int aff=0,aff2=0;
+  fprintf(stderr,"\n");
+  fprintf(stderr,"             Table de représentation des types et des entêtes de sous-programmes                    \n");
+  fprintf(stderr,"----------------------------------------------------------------------------------------------------\n");
   for(aff=0;aff<1000 && tablerepre[aff]!=-1;aff++){
     fprintf(stderr,"|%-3d|",aff);
     if(aff!=0 && aff%24==0){

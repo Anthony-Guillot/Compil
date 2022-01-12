@@ -1,0 +1,29 @@
+PROG
+var x : int;
+var y : int;
+proc a
+var x : int;
+BEGIN
+  y=x+1;
+END;
+proc b(c:int)
+var x : int;
+  proc x
+  var x : int;
+  BEGIN
+    x=0;
+    y=x-2;
+  END;
+  fonc x(c:int;d:float) return int
+  BEGIN
+    d=9.1;
+    return (c+x+y);
+  END;
+BEGIN
+  y=x+5;
+END;
+BEGIN
+  y=2;
+  x=y+1;
+  inst_void;
+END

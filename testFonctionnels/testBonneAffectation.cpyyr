@@ -1,0 +1,5 @@
+PROG
+var i : int;
+BEGIN
+i=3;
+END

@@ -22,6 +22,8 @@ void TRdimtab(int x, int y);
 void ajoutTRfonc(int type, int nb);
 /*---Rajout une procedure dans la table des representations---*/
 void ajoutTRproc(int nb);
+/*---Ajoute les parametre d'une procedure et d'une fonction--*/
+void ajoutTRParam(int lexico,int type,int fonction,int debut);
 /*---affiche la table des representations---*/
 void afficherTR();
 #endif
