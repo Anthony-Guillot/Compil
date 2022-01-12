@@ -62,8 +62,22 @@ void ajoutTRproc(int nb){
 }
 
 void afficherTR(){
-  int aff=0;
+  int aff=0,aff2=0;
   for(aff=0;aff<1000 && tablerepre[aff]!=-1;aff++){
-    fprintf(stdout,"%d : %d\n",aff,tablerepre[aff]);
+    fprintf(stderr,"|%-3d|",aff);
+    if(aff!=0 && aff%24==0){
+      fprintf(stderr,"\n");
+      for(aff2=aff-(aff-aff2);aff2<=aff;aff2++){
+        fprintf(stderr,"|%-3d|",tablerepre[aff2]);
+      }
+      fprintf(stderr,"\n");
+      fprintf(stderr,"\n");
+    }
   }
+  fprintf(stderr,"\n");
+  for(aff2=aff-(aff-aff2);aff2<aff;aff2++){
+        fprintf(stderr,"|%-3d|",tablerepre[aff2]);
+      }
+      fprintf(stderr,"\n");
+      fprintf(stderr,"\n");
 }

@@ -13,7 +13,6 @@ clean:
 	rm tableRegion.o
 	rm tableLexico.o
 	rm tableDecla.o
-	rm pregio.o
+	rm pregion.o
 	rm tableRepre.o
-	rm arbre.o
 	rm projet
