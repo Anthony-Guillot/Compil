@@ -1,7 +1,6 @@
 PROG
 var age : int;
 BEGIN
-     read (age);
      if (age > 18) then
      BEGIN
           write("vous etes majeur car vous avez %d ans",age);
