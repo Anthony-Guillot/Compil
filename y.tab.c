@@ -1816,7 +1816,7 @@ ajoutTRchamp(positionLexeme(nombuffer2),positionLexeme(strdup(yytext)),decalage)
 
   case 73:
 #line 198 "projet.y" /* yacc.c:1646  */
-    {(yyval.type1)=inserer_frere((yyvsp[-5].type1),(yyvsp[0].type1));}
+    {(yyval.type1)=inserer_fils(creer_arbre(CONDITION_BIS,-1,-1),inserer_frere((yyvsp[-5].type1),inserer_frere((yyvsp[-2].type1),(yyvsp[0].type1))));}
 #line 1821 "y.tab.c" /* yacc.c:1646  */
     break;
 

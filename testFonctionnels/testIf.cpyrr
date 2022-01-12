@@ -3,10 +3,10 @@ var age : int;
 BEGIN
      if (age > 18) then
      BEGIN
-          write("vous etes majeur car vous avez %d ans",age);
+          age = age - 18;
      END
      else
      BEGIN
-          write("vous etes mineur");
+          age = age + 18;
      END;
 END

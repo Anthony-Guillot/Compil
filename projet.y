@@ -195,7 +195,7 @@ un_arg:expression {$$=$1;}
 condition:SI PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE 
 ALORS liste_instructions {$$=inserer_fils(creer_arbre(CONDITION_BIS,-1,-1),inserer_frere($3,$6));}
 |SI PARENTHESE_OUVRANTE expression_booleenne PARENTHESE_FERMANTE 
-ALORS liste_instructions SINON liste_instructions  {$$=inserer_frere($3,$8);}
+ALORS liste_instructions SINON liste_instructions  {$$=inserer_fils(creer_arbre(CONDITION_BIS,-1,-1),inserer_frere($3,inserer_frere($6,$8)));}
 ;
 
   /*--- Strucuture While ---*/
